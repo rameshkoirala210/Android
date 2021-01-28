@@ -71,7 +71,15 @@ public class MainActivity extends AppCompatActivity {
         if (str.trim().isEmpty() || str.equals("")) {
             Toast.makeText(this, "ENTER INCHES", Toast.LENGTH_SHORT).show();
             return false;
-        } else {
+        } else{
+            for (int i = 0; i < str.length(); i++){
+                if (Character.isDigit(str.charAt(i)) == false){
+                    Toast.makeText(this, "Check Inches. CHANGE IT", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+        }
+        /*else {
             try {
                 //Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
                 Double.parseDouble(str);
@@ -79,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Check Inches. CHANGE IT", Toast.LENGTH_SHORT).show();
                 return false;
             }
-        }
+        }*/
         return true;
     }
 }

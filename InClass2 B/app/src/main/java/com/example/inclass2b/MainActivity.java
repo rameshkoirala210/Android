@@ -38,11 +38,12 @@ public class MainActivity extends AppCompatActivity {
         convert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validateInches(inches.getText().toString().trim()) == false){
-
-                } else {
-                    int radioID = radioGroup.getCheckedRadioButtonId();
-                    checkedbutton = findViewById(radioID);
+                int radioID = radioGroup.getCheckedRadioButtonId();
+                checkedbutton = findViewById(radioID);
+                if (checkedbutton.getText().toString().equals("Clear All")) {
+                    inches.setText("");
+                    result.setText("");
+                } else if (validateInches(inches.getText().toString().trim())){
                     if (checkedbutton.getText().toString().equals("To Meter")) {
                         //result.setText(checkedbutton.getText().toString())
                         Double value = Double.parseDouble(inches.getText().toString());
@@ -56,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
                         Double value = Double.parseDouble(inches.getText().toString());
                         Double calculateValue = value / 63360.0;
                         result.setText(calculateValue.toString() + " miles");
-                    } else if (checkedbutton.getText().toString().equals("Clear All")) {
-                        inches.setText("");
-                        result.setText("");
                     }
                 }
             }
@@ -70,15 +68,21 @@ public class MainActivity extends AppCompatActivity {
         if (str.trim().isEmpty() || str.equals("")) {
             Toast.makeText(this, "ENTER INCHES", Toast.LENGTH_SHORT).show();
             return false;
-        } else {
-            try {
+        } else{
+            for (int i = 0; i < str.length(); i++){
+                if (Character.isDigit(str.charAt(i)) == false){
+                    Toast.makeText(this, "Check Inches. CHANGE IT", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+        }
+           /* try {
                 //Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
                 Double.parseDouble(str);
             } catch (NumberFormatException e) {
                 Toast.makeText(this, "Check Inches. CHANGE IT", Toast.LENGTH_SHORT).show();
                 return false;
-            }
-        }
+            }*/
         return true;
     }
 }
