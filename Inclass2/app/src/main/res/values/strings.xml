@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">In Class 2a</string>
+    <string name="button_text">Convert</string>
+    <string name="hint_Inches">Enter Inch Value</string>
+    <string name="text_Inches">Inches</string>
+    <string name="text_Result">Result</string>
+    <string name="to_meter">To Meter</string>
+    <string name="to_Feet">To Feet</string>
+    <string name="to_Miles">To Miles</string>
+    <string name="clear">Clear All</string>
+</resources>
