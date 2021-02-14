@@ -25,6 +25,7 @@ public class CreateTask extends AppCompatActivity implements DatePickerDialog.On
     Button submit, cancel, setDate;
     EditText taskName;
     TextView date;
+    Calendar calendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,6 @@ public class CreateTask extends AppCompatActivity implements DatePickerDialog.On
         date = (TextView) findViewById(R.id.ViewDate);
 
 
-
         setDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +54,7 @@ public class CreateTask extends AppCompatActivity implements DatePickerDialog.On
                 selectedButton = findViewById(radioId);
 
                 String enteredName = taskName.getText().toString();
-                String enteredDate = date.getText().toString();
+                Calendar enteredDate = calendar;
                 String enteredData = selectedButton.getText().toString();
 
                 Profile user = new Profile(enteredName, enteredDate, enteredData);
@@ -82,6 +82,9 @@ public class CreateTask extends AppCompatActivity implements DatePickerDialog.On
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String date1 = (month + 1)  + "/" + dayOfMonth + "/" + year;
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, dayOfMonth);
+        calendar = cal;
         date.setText(date1);
     }
 }
