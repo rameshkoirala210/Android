@@ -67,38 +67,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void CreateAlertDialog(){
-        String[] s = {"R", "X"};
+
+        String[] s = new String[list.size()];
+        for(int i = 0; i < list.size(); i++){
+            s[i] = list.get(i).name;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Rand")
+        builder.setTitle("Select Task")
                 .setItems(s, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // The 'which' argument contains the index position
                         // of the selected item
+                        Intent intent = new Intent(MainActivity.this, DisplayTask.class);
+                        intent.putExtra("index", which);
+                        startActivityForResult(intent,1);
                     }
                 });
         builder.create();
         builder.show();
-
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Select Task")
-//        Object[] objects = list.toArray();
-//                .setItems(objects, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // The 'which' argument contains the index position
-//                        // of the selected item
-//
-//                    }
-//                })
-//                .setNegativeButton("Cancel", null);
-//
-//        builder.create();
-//        builder.show();
     }
 
+
     @Override
-    public void startActivityForResult(Intent intent, int requestCode) {
-        super.startActivityForResult(intent, requestCode);
-     
-        numofTasks.setText("you have " + list.size() + " tasks");
+    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle a) {
+        super.startActivityForResult(intent, requestCode, a);
+        if(requestCode == RESULT_OK) {
+            numofTasks.setText("CHANGED");
+        }
+
     }
 }

@@ -24,20 +24,16 @@ public class DisplayTask extends AppCompatActivity {
         delete = (Button) findViewById(R.id.Deletebutton);
 
 
-        Profile user = (Profile) getIntent().getSerializableExtra("USER");
-        name.setText(user.name);
-        date.setText(user.date);
-        priority.setText(user.priority);
+        int index = getIntent().getIntExtra("index", 0);
+        name.setText(MainActivity.list.get(index).name);
+        date.setText(MainActivity.list.get(index).date);
+        priority.setText(MainActivity.list.get(index).priority);
 
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String deleted = "";
-                Intent intent = new Intent();
-
-                intent.putExtra("Deleted", deleted);
-                setResult(5, intent);
+                MainActivity.list.remove(index);
 
                 finish();
             }
