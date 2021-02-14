@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CreateTask extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    //Todo Validation: should have a name, date, and a priority
     RadioGroup group;
     RadioButton selectedButton;
     Button submit, cancel, setDate;
@@ -57,10 +58,11 @@ public class CreateTask extends AppCompatActivity implements DatePickerDialog.On
                 Calendar enteredDate = calendar;
                 String enteredData = selectedButton.getText().toString();
 
-                Profile user = new Profile(enteredName, enteredDate, enteredData);
-                MainActivity.list.add(user);
+                Task user = new Task(enteredName, enteredDate, enteredData);
 
-
+                Intent intent = new Intent();
+                intent.putExtra("User", user);
+                setResult(RESULT_OK, intent);
                 finish();
             }
 
