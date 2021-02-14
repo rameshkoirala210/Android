@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">InClass03</string>
+    <string name="Textview_name">Name:</string>
+    <string name="Textview_Email">Email:</string>
+    <string name="Textview_id">ID:</string>
+    <string name="Textview_dep">Dept:</string>
+    <string name="hint_name">Enter Name</string>
+    <string name="hint_email">Enter Email</string>
+    <string name="hint_id">Enter ID</string>
+    <string name="text_button">Select</string>
+    <string name="button_Submit">Submit</string>
+    <string name="radio_comsci">Computer Science</string>
+    <string name="radio_SoftwareInfo">Software Info. Systems</string>
+    <string name="radio_bio">Bio Informatics</string>
+    <string name="radio_DataSci">Data Science</string>
+    <string name="button_Cancel">Cancel</string>
+    <string name="button_Select">Select</string>
+</resources>

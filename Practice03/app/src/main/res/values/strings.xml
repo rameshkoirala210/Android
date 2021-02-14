@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Practice03</string>
+    <string name="button_submit">Submit</string>
+    <string name="hint_Name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_Address">Address</string>
+    <string name="hint_PhoneNumber">Phone Number</string>
+    <string name="hint_Mood">Your Mood ?</string>
+</resources>

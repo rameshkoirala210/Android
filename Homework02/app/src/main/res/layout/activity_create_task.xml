@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateTask">
+
+    <TextView
+        android:id="@+id/textView_Name"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="45dp"
+        android:text="@string/tesk_name"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_Date"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/tesk_date"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Name" />
+
+    <TextView
+        android:id="@+id/textView_Priority"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/tesk_priority"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Date" />
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="243dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="45dp"
+        android:ems="10"
+        android:hint="@string/hint_TaskName"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/textView_Name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonSetDate"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/button_setdate"
+        app:layout_constraintStart_toEndOf="@+id/ViewDate"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+
+    <RadioGroup
+        android:id="@+id/RadiogroupPriority"
+        android:layout_width="268dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_Priority">
+
+        <RadioButton
+            android:id="@+id/radioButtonHigh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_high" />
+
+        <RadioButton
+            android:id="@+id/radioButtonMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_Medium" />
+
+        <RadioButton
+            android:id="@+id/radioButtonLow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_Low" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/Cancelbutton"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/button_cancel"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RadiogroupPriority" />
+
+    <Button
+        android:id="@+id/Deletebutton"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:text="@string/button_submit"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/RadiogroupPriority" />
+
+    <TextView
+        android:id="@+id/ViewDate"
+        android:layout_width="112dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/textView_Date"
+        app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+</androidx.constraintlayout.widget.ConstraintLayout>

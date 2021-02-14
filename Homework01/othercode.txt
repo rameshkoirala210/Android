@@ -1,0 +1,60 @@
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText billTotal;
+    TextView tipAmount, totalAmount, percentage;
+    SeekBar costumPercent;
+    RadioButton checkedbutton;
+    RadioGroup radioGroup;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        billTotal = (EditText) findViewById(R.id.editBillTotal);
+        tipAmount = (TextView) findViewById(R.id.textTipAmount);
+        percentage = (TextView) findViewById(R.id.percentage);
+        totalAmount = (TextView) findViewById(R.id.textTotalAmount);
+        costumPercent = (SeekBar) findViewById(R.id.customPercent);
+        radioGroup = (RadioGroup) findViewById(R.id.RadioGroup);
+
+        costumPercent.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int percent = progress;
+                percentage.setText(String.valueOf(percent) + "%");
+                claculate();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+        billTotal.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void afterTextChanged(Editable s) {
+                claculate();
+            }
+        });
+    }
+    private void claculate(){
+        if(billTotal.length() == 0){
+            billTotal.requestFocus();
+            billTotal.setError("Enter Bill Total");
+        }else{
+            double amount = Double.parseDouble(billTotal.getText().toString());
+            int percent = costumPercent.getProgress();
+            double tip = amount*percent/100.0;
+            double total = amount +tip;
+
+            tipAmount.setText(String.valueOf(tip));
+            totalAmount.setText(String.valueOf(total));
+        }
+    }
+}
