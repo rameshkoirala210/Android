@@ -9,6 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Calendar;
+/*
+    Assignment # Homework02
+    File Name DisplayTask
+    Full name of the student - Ramesh Koirala, Anirudh Shankar
+*/
 
 public class DisplayTask extends AppCompatActivity {
     TextView name,date,priority;
@@ -16,10 +21,6 @@ public class DisplayTask extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Todo Clicking the “DELETE” button should return the task object back as a result to the
-        //Main Activity in order to be deleted from the list maintained in the Main activity. Then
-        //finish the Display Task activity
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_task);
 
@@ -37,20 +38,22 @@ public class DisplayTask extends AppCompatActivity {
 //        date.setText(x);
 //        priority.setText(MainActivity.list.get(index).priority);
 
-        Task user = (Task) getIntent().getSerializableExtra("UserArray");
-        Calendar d1 = user.date;
+        Task task = (Task) getIntent().getSerializableExtra("UserArray");
+        Calendar d1 = task.date;
         String x = d1.get(Calendar.MONTH)+1 + "/" + d1.get(Calendar.DAY_OF_MONTH) + "/" + d1.get(Calendar.YEAR);
 
-        name.setText(user.name);
+        //simple formatter ..
+
+        name.setText(task.name);
         date.setText(x);
-        priority.setText(user.priority);
+        priority.setText(task.priority);
 
 
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.putExtra("newUser", user);
+                intent.putExtra("newTask", task);
                 setResult(RESULT_OK, intent);
                 finish();
             }

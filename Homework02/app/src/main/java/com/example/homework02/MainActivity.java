@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.text.BreakIterator;
@@ -19,17 +20,18 @@ import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+/*
+    Assignment # Homework02
+    File Name To Do list
+    Full name of the student - Ramesh Koirala, Anirudh Shankar
+*/
 
 public class MainActivity extends AppCompatActivity {
-    //Todo: Show "None" when there is no task
-    //Todo: Upon returning from the “Create Task Activity” the newly created task should be
-    //stored in the task list that is stored in the Main Activity. In addition, the number of
-    //tasks and upcoming task displayed should be updated to account for the newly
-    //added task
-    Button viewTask, createTask;
     TextView numofTasks, upcomingTask;
+    final public int REQ_CREATE_TASK = 100;
+    final public int REQ_VIEW_TASK = 200;
 
-    public static ArrayList<Task> list = new ArrayList<>();
+    public ArrayList<Task> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,20 +39,18 @@ public class MainActivity extends AppCompatActivity {
         setTitle("To Do List");
 
 
-        viewTask = (Button) findViewById(R.id.buttonViewTask);
-        createTask = (Button) findViewById(R.id.buttonCreateTask);
         numofTasks = (TextView) findViewById(R.id.numberofTask);
         upcomingTask = (TextView) findViewById(R.id.upcomingTask);
 
         setText();
-        createTask.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.buttonCreateTask).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CreateTask.class);
-                startActivityForResult(intent,1);
+                startActivityForResult(intent,REQ_CREATE_TASK);
             }
         });
-        viewTask.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.buttonViewTask).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CreateAlertDialog();
@@ -59,25 +59,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void CreateAlertDialog(){
-
         String[] s = new String[list.size()];
         for(int i = 0; i < list.size(); i++){
             s[i] = list.get(i).name;
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Task")
-                .setItems(s, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // The 'which' argument contains the index position
-                        // of the selected item
-                        Intent intent = new Intent(MainActivity.this, DisplayTask.class);
-                        //intent.putExtra("index", which);
-                        intent.putExtra("UserArray", list.get(which));
-                        startActivityForResult(intent,2);
-                    }
-                });
-        builder.create();
-        builder.show();
+        if(list.size() > 0) {
+            builder.setTitle("Select Task")
+                    .setItems(s, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(MainActivity.this, DisplayTask.class);
+                            intent.putExtra("UserArray", list.get(which));
+                            startActivityForResult(intent, REQ_VIEW_TASK);
+                        }
+                    });
+        }else {
+            builder.setTitle("No Tasks: Create a Task First");
+        }
+            builder.create();
+            builder.show();
+
+
     }
 
 //    @Override
@@ -96,18 +98,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //Create Task
-        if (requestCode == 1){
+        if (requestCode == REQ_CREATE_TASK){
             if (resultCode == RESULT_OK) {
-                if (data != null && data.hasExtra("User")) {
-                    list.add((Task) data.getSerializableExtra("User"));
+                if (data != null && data.hasExtra("createTask")) {
+                    list.add((Task) data.getSerializableExtra("createTask"));
                 }
             } else if (resultCode == RESULT_CANCELED) {}
         }
-        if(requestCode == 2){
-            //MainActivity.list.remove(index);
+        if(requestCode == REQ_VIEW_TASK){
             if (resultCode == RESULT_OK) {
-                Task t = ((Task)data.getSerializableExtra("newUser"));
-                list.remove(t);
+                for(int i = 0; i < list.size(); i++){
+                    Task task = (Task) data.getSerializableExtra("newTask");
+                    //Log.d("TAG", "onActivityResult: " + first.equals(second));
+                    if(task.equals(list.get(i))){
+                        list.remove(i);
+                    }
+                }
+
+                list.remove((Task) data.getSerializableExtra("newUser"));
             } else if (resultCode == RESULT_CANCELED) {}
         }
         setText();
@@ -119,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         if (list.size()>0) {
             upcomingTask.setText(list.get(0).toString());
         }else if(list.size() == 0){
-            upcomingTask.setText("None");
+            upcomingTask.setText("Upcoming Tasks" + "\n\nNone");
         }
     }
 }
