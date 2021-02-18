@@ -1,8 +1,8 @@
 package com.example.inclass04;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     public void setAccountGoToAccountFragment(DataServices.Account account) {
         this.account = account;
         //Log.d("aaa", "setAccountGoToAccountFragment: inhere");
-        //getFragmentManager().beginTransaction().replace(R.id.layout, AccountFragment.newInstance(account)).commit();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, AccountFragment.newInstance(account)).commit();
     }
 }

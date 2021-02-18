@@ -2,13 +2,14 @@ package com.example.inclass04;
 
 import android.os.Bundle;
 
-import android.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 public class AccountFragment extends Fragment {
     private static final String ARG_PARAM_ACCOUNT = "ARG_PARAM_ACCOUNT";
