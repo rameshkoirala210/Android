@@ -23,6 +23,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     public void setAccountGoToAccountFragment(DataServices.Account account) {
         this.account = account;
         //Log.d("aaa", "setAccountGoToAccountFragment: inhere");
-        getFragmentManager().beginTransaction().replace(R.id.layout, AccountFragment.newInstance(account)).commit();
+        //getFragmentManager().beginTransaction().replace(R.id.layout, AccountFragment.newInstance(account)).commit();
     }
 }

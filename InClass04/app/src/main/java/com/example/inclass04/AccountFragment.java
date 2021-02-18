@@ -39,6 +39,8 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        View v = inflater.inflate(R.layout.fragment_account, container, false);
+        getActivity().setTitle("Account");
+
 
         sentName = (TextView)v.findViewById(R.id.accountName);
         logout = (Button) v.findViewById(R.id.buttonLogout);

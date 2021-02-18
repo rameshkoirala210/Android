@@ -22,6 +22,7 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
+        getActivity().setTitle("Register");
 
         registeremail = (EditText)v.findViewById(R.id.RegisterEmail);
         registerpassword = (EditText)v.findViewById(R.id.RegisterPassword);

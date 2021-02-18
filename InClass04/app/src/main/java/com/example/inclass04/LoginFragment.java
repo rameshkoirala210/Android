@@ -28,6 +28,7 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
+        getActivity().setTitle("Login");
 
         loginEmail = (EditText)v.findViewById(R.id.LoginEmail);
         loginpassword = (EditText)v.findViewById(R.id.LoginPassword);
@@ -43,6 +44,7 @@ public class LoginFragment extends Fragment {
                     DataServices.Account account = DataServices.login(email,password);
                     if (account == null){
                         Toast.makeText(getActivity(), "Unable to Login!!", Toast.LENGTH_SHORT).show();
+                        Log.d("aa", "onClick:notable ");
                     }else{
                         Toast.makeText(getActivity(), "Login Succesful!!", Toast.LENGTH_SHORT).show();
                         //getFragmentManager().beginTransaction().replace(R.id.layout, AccountFragment.newInstance(account)).commit();
@@ -54,7 +56,9 @@ public class LoginFragment extends Fragment {
         v.findViewById(R.id.buttonNewAccount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.layout, new RegisterFragment()).commit();
+                Log.d("aa", "onClick:newacc ");
+                RegisterFragment fragment = new RegisterFragment();
+                getFragmentManager().beginTransaction().replace(R.id.layout, fragment).commit();
             }
         });
 
