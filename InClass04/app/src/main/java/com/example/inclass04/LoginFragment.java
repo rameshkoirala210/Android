@@ -58,7 +58,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 Log.d("aa", "onClick:newacc ");
                 RegisterFragment fragment = new RegisterFragment();
-                getFragmentManager().beginTransaction().replace(R.id.layout, fragment).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).commit();
             }
         });
 

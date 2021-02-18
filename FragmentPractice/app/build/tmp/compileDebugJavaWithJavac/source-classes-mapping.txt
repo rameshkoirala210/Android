@@ -1,0 +1,17 @@
+com/example/fragmentpractice/BuildConfig.java
+ com.example.fragmentpractice.BuildConfig
+com/example/fragmentpractice/DisplayActivity.java
+ com.example.fragmentpractice.DisplayActivity
+com/example/fragmentpractice/MainActivity.java
+ com.example.fragmentpractice.MainActivity
+com/example/fragmentpractice/newfragment.java
+ com.example.fragmentpractice.newfragment
+ com.example.fragmentpractice.newfragment$1
+com/example/fragmentpractice/Evaluation.java
+ com.example.fragmentpractice.Evaluation
+ com.example.fragmentpractice.Evaluation$1
+ com.example.fragmentpractice.Evaluation$2
+ com.example.fragmentpractice.Evaluation$3
+ com.example.fragmentpractice.Evaluation$4
+ com.example.fragmentpractice.Evaluation$5
+ com.example.fragmentpractice.Evaluation$6

@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 public class AccountFragment extends Fragment {
     private static final String ARG_PARAM_ACCOUNT = "ARG_PARAM_ACCOUNT";
     TextView sentName;
-    Button editProfile, logout;
 
     private DataServices.Account mAccount;
     public AccountFragment() {
@@ -42,13 +41,21 @@ public class AccountFragment extends Fragment {
        View v = inflater.inflate(R.layout.fragment_account, container, false);
         getActivity().setTitle("Account");
 
-
         sentName = (TextView)v.findViewById(R.id.accountName);
-        logout = (Button) v.findViewById(R.id.buttonLogout);
-        editProfile = (Button) v.findViewById(R.id.buttonProfile);
 
         sentName.setText(this.mAccount.getName());
+        v.findViewById(R.id.buttonProfile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+        v.findViewById(R.id.buttonLogout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         return v;
     }
