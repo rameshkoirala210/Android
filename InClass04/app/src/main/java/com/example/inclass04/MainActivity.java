@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.LoginListener{
+public class MainActivity extends AppCompatActivity implements LoginFragment.LoginListener, AccountFragment.AccountListener, UpdateAccountFragment.UpdateAccountListener{
 
     DataServices.Account account;
     @Override
@@ -25,5 +25,16 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         //Log.d("aaa", "setAccountGoToAccountFragment: inhere");
 
         getSupportFragmentManager().beginTransaction().replace(R.id.layout, AccountFragment.newInstance(account)).commit();
+    }
+
+    @Override
+    public void goToUpdateAccountFragment(DataServices.Account account) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, UpdateAccountFragment.newInstance(account)).addToBackStack("f1").commit();
+    }
+
+    @Override
+    public void updatedNewAccount(DataServices.Account account) {
+        Log.d("TAG", "updatedNewAccount: " + account.getName());
+        getSupportFragmentManager().popBackStack();
     }
 }

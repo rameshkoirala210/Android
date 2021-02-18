@@ -1,19 +1,23 @@
 package com.example.inclass04;
 
+import android.content.Context;
 import android.os.Bundle;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 public class AccountFragment extends Fragment {
     private static final String ARG_PARAM_ACCOUNT = "ARG_PARAM_ACCOUNT";
     TextView sentName;
+    private static final String TAG = "TAG_Account";
 
     private DataServices.Account mAccount;
     public AccountFragment() {
@@ -25,6 +29,7 @@ public class AccountFragment extends Fragment {
         Bundle args = new Bundle();
         args.putSerializable(ARG_PARAM_ACCOUNT, account);
         fragment.setArguments(args);
+        Log.d(TAG, "newInstance: ");
         return fragment;
     }
     @Override
@@ -35,6 +40,8 @@ public class AccountFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,12 +49,15 @@ public class AccountFragment extends Fragment {
         getActivity().setTitle("Account");
 
         sentName = (TextView)v.findViewById(R.id.accountName);
-
         sentName.setText(this.mAccount.getName());
+        Log.d("TAG", "onCreateView: " + mAccount.getName() + mAccount.getEmail());
+
+
         v.findViewById(R.id.buttonProfile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d("TAG", "clicked update");
+                mListner.goToUpdateAccountFragment(mAccount);
             }
         });
         v.findViewById(R.id.buttonLogout).setOnClickListener(new View.OnClickListener() {
@@ -58,5 +68,16 @@ public class AccountFragment extends Fragment {
         });
 
         return v;
+    }
+    AccountListener mListner;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mListner = (AccountListener)(context);
+    }
+
+    interface AccountListener{
+        void goToUpdateAccountFragment(DataServices.Account account);
     }
 }
