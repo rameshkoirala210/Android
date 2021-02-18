@@ -1,6 +1,7 @@
 package com.example.inclass04;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 public class DataServices {
@@ -82,7 +83,7 @@ public class DataServices {
         return account;
     }
 
-    public static class Account {
+    public static class Account implements Serializable {
         private String name, email, password;
         public Account(String name, String email, String password) {
             this.name = name;
