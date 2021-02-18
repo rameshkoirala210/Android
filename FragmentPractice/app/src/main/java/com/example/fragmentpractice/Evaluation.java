@@ -1,5 +1,7 @@
 package com.example.fragmentpractice;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -55,7 +57,7 @@ public class Evaluation extends Fragment {
             @Override
             public void onClick(View v) {
                 newfragment fragment = new newfragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment,fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.layout,fragment).commit();
             }
         });
         structure.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -122,4 +124,5 @@ public class Evaluation extends Fragment {
         }
         return "failed";
     }
+
 }
