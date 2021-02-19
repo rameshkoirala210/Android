@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 public class DataServices {
     private static HashMap<String, Account> accounts = new HashMap<String, Account>(){{
+        put("email", new Account("a", "email", "a"));
         put("a@a.com", new Account("Alice Smith", "a@a.com", "test123"));
         put("b@b.com", new Account("Bob Smith", "b@b.com", "test123"));
         put("c@c.com", new Account("Charles Smith", "c@c.com", "test123"));

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 public class RegisterFragment extends Fragment {
 
     EditText registeremail,registerpassword,registerName;
+    private static final String TAG = "TAG_Register";
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -39,7 +41,9 @@ public class RegisterFragment extends Fragment {
                 String name = registerName.getText().toString();
                 if(email.isEmpty() || password.isEmpty() || name.isEmpty()){
                     Toast.makeText(getActivity(), "Please Fill in  Name/Login/Password!!", Toast.LENGTH_SHORT).show();
-                }else{
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(getActivity(), "EMAIL incorrect", Toast.LENGTH_SHORT).show();
+                }  else{
                     DataServices.Account account = DataServices.register(name,email,password);
                     if (account == null){
                         Toast.makeText(getActivity(), "Unable to Login!!", Toast.LENGTH_SHORT).show();
@@ -59,6 +63,7 @@ public class RegisterFragment extends Fragment {
         });
         return v;
     }
+
     LoginFragment.LoginListener mListner;
 
     @Override
@@ -67,7 +72,4 @@ public class RegisterFragment extends Fragment {
         mListner = (LoginFragment.LoginListener)(context);
     }
 
-    interface LoginListener{
-        void setAccountGoToAccountFragment(DataServices.Account account);
-    }
 }

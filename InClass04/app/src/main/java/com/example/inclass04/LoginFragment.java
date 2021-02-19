@@ -19,6 +19,7 @@ import android.widget.Toast;
 public class LoginFragment extends Fragment {
 
     EditText loginEmail,loginpassword;
+    private static final String TAG = "TAG_LOGIN";
 
     public LoginFragment() {
         // Required empty public constructor
@@ -44,7 +45,7 @@ public class LoginFragment extends Fragment {
                     DataServices.Account account = DataServices.login(email,password);
                     if (account == null){
                         Toast.makeText(getActivity(), "Unable to Login!!", Toast.LENGTH_SHORT).show();
-                        Log.d("aa", "onClick:notable ");
+                        Log.d(TAG, "onClick:notable");
                     }else{
                         Toast.makeText(getActivity(), "Login Succesful!!", Toast.LENGTH_SHORT).show();
                         //getFragmentManager().beginTransaction().replace(R.id.layout, AccountFragment.newInstance(account)).commit();
@@ -56,7 +57,7 @@ public class LoginFragment extends Fragment {
         v.findViewById(R.id.buttonNewAccount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("aa", "onClick:newacc ");
+                Log.d(TAG, "onClick:newacc");
                 RegisterFragment fragment = new RegisterFragment();
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).commit();
             }

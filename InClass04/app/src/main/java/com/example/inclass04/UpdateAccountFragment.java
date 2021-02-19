@@ -60,14 +60,14 @@ public class UpdateAccountFragment extends Fragment {
                 if(name.isEmpty() || password.isEmpty()){
                     Toast.makeText(getActivity(), "Name/Password is Empty!!", Toast.LENGTH_SHORT).show();
                 }else{
-                    DataServices.Account account = DataServices.update(mAccount,name,password);
-                        if(account == null){
-                            Toast.makeText(getActivity(), "Account not Updated", Toast.LENGTH_SHORT).show();
-                        }else {
-                            mListner.updatedNewAccount(account);
-                        }
+                    mAccount = DataServices.update(mAccount, name, password);
+                    if (mAccount != null) {
+                        mListner.updatedNewAccount(mAccount);
+                        Log.d(TAG, "Onclick: " + mAccount.getName());
+                    } else if (mAccount == null) {
+                        Toast.makeText(getActivity(), "Account Updated", Toast.LENGTH_SHORT).show();
                     }
-
+                }
             }
         });
         v.findViewById(R.id.UpdateCancle).setOnClickListener(new View.OnClickListener() {

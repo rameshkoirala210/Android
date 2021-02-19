@@ -40,6 +40,10 @@ public class AccountFragment extends Fragment {
         }
     }
 
+    public void updateAccount(DataServices.Account account){
+        Log.d(TAG, "ACCOUNT UPDATED");
+        this.mAccount = account;
+    }
 
 
     @Override
@@ -50,20 +54,19 @@ public class AccountFragment extends Fragment {
 
         sentName = (TextView)v.findViewById(R.id.accountName);
         sentName.setText(this.mAccount.getName());
-        Log.d("TAG", "onCreateView: " + mAccount.getName() + mAccount.getEmail());
 
 
         v.findViewById(R.id.buttonProfile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAG", "clicked update");
+                Log.d(TAG, "clicked update");
                 mListner.goToUpdateAccountFragment(mAccount);
             }
         });
         v.findViewById(R.id.buttonLogout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mListner.logout();
             }
         });
 
@@ -79,5 +82,6 @@ public class AccountFragment extends Fragment {
 
     interface AccountListener{
         void goToUpdateAccountFragment(DataServices.Account account);
+        void logout();
     }
 }
