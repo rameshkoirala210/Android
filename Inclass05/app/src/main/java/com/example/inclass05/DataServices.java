@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class DataServices {
     private static HashMap<String, Account> authTokenAccountsMap = new HashMap<String, Account>(){{
-        put(UUID.randomUUID().toString(), new Account("Alice Smith", "a@a.com", "test123"));
+        put(UUID.randomUUID().toString(), new Account("Alice Smith", "a@a.com", "1"));
         put(UUID.randomUUID().toString(), new Account("Bob Smith", "b@b.com", "test123"));
         put(UUID.randomUUID().toString(), new Account("Charles Smith", "c@c.com", "test123"));
     }};

@@ -8,7 +8,7 @@
     tools:context=".AppDetailsFragment">
 
     <TextView
-        android:id="@+id/AppDetailsName"
+        android:id="@+id/appDetailsName"
         android:layout_width="211sp"
         android:layout_height="50sp"
         android:layout_marginStart="100dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/AppDetailsArtist"
+        android:id="@+id/appDetailsArtist"
         android:layout_width="211sp"
         android:layout_height="50sp"
         android:layout_marginStart="100dp"
@@ -32,12 +32,11 @@
         android:layout_marginRight="100dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AppDetailsName" />
+        app:layout_constraintTop_toBottomOf="@+id/appDetailsName" />
 
     <TextView
-        android:id="@+id/AppDetailsDate"
+        android:id="@+id/appDetailsDate"
         android:layout_width="211sp"
         android:layout_height="50sp"
         android:layout_marginStart="100dp"
@@ -47,9 +46,8 @@
         android:layout_marginRight="100dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AppDetailsArtist" />
+        app:layout_constraintTop_toBottomOf="@+id/appDetailsArtist" />
 
     <TextView
         android:id="@+id/textView8"
@@ -60,9 +58,10 @@
         android:layout_marginTop="25dp"
         android:text="@string/String_Genres"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AppDetailsDate" />
+        app:layout_constraintTop_toBottomOf="@+id/appDetailsDate" />
 
     <ListView
+        android:id="@+id/listview_genres"
         android:layout_width="411dp"
         android:layout_height="471dp"
         android:layout_marginTop="20dp"
