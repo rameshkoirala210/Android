@@ -10,6 +10,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
 
     DataServices.Account account;
     private static final String TAG = "TAG_MAIN";
+    private static final String GoToTag = "GotoAccount";
+    private static final String UpdateTag = "Update";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,13 +23,13 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     public void setAccountGoToAccountFragment(DataServices.Account account) {
         this.account = account;
         Log.d(TAG, "setAccountGoToAccountFragment: inhere");
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout, AccountFragment.newInstance(account), "AFrag").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, AccountFragment.newInstance(account), GoToTag).commit();
     }
 
     @Override
     public void goToUpdateAccountFragment(DataServices.Account account) {
         Log.d(TAG, "goToUpdateAccountFragment: inhere");
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout, UpdateAccountFragment.newInstance(account)).addToBackStack("f1").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, UpdateAccountFragment.newInstance(account)).addToBackStack(UpdateTag).commit();
     }
 
     @Override
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
         Log.d(TAG, "updatedNewAccount: " + account.getName());
         this.account = account;
 
-        AccountFragment fragment = (AccountFragment) getSupportFragmentManager().findFragmentByTag("AFrag");
+        AccountFragment fragment = (AccountFragment) getSupportFragmentManager().findFragmentByTag(GoToTag);
         if (fragment != null){
             fragment.updateAccount(account);
         }

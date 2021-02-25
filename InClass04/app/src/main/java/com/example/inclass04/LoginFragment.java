@@ -40,7 +40,7 @@ public class LoginFragment extends Fragment {
                 String email =  loginEmail.getText().toString();
                 String password = loginpassword.getText().toString();
                 if(email.isEmpty() || password.isEmpty()){
-                    Toast.makeText(getActivity(), "Please Enter Login/Password!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please Enter Email/Password!!", Toast.LENGTH_SHORT).show();
                 }else{
                     DataServices.Account account = DataServices.login(email,password);
                     if (account == null){
