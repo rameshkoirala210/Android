@@ -65,7 +65,7 @@ public class AppCategoriesFragment extends Fragment {
                 public void onSuccess(ArrayList<String> data) {
                   //recyclerview suff
                     Log.d(TAG, "onSuccess: " + data.toString());
-                   adapter = new CategoryRecyclerAdapter(data);
+                   adapter = new CategoryRecyclerAdapter(data, mListner);
                    recyclerView_appCategory.setAdapter(adapter);
                 }
                 @Override

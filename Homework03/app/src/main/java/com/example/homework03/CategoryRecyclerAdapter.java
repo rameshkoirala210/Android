@@ -1,5 +1,6 @@
 package com.example.homework03;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +14,10 @@ import java.util.ArrayList;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.CategoryViewHolder> {
     ArrayList<String> categories;
-    public CategoryRecyclerAdapter(ArrayList<String> categories) {
+    AppCategoriesFragment.AppCategoryListener mListner;
+    public CategoryRecyclerAdapter(ArrayList<String> categories, AppCategoriesFragment.AppCategoryListener mListner) {
         this.categories = categories;
+        this.mListner = mListner;
     }
 
     @NonNull
@@ -29,6 +32,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
         holder.textViewcategory.setText(categories.get(position));
         holder.category = categories.get(position);
+        holder.mListner = this.mListner;
     }
 
     @Override
@@ -39,6 +43,8 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
     public static class CategoryViewHolder extends RecyclerView.ViewHolder{
         TextView textViewcategory;
         String category;
+        AppCategoriesFragment.AppCategoryListener mListner;
+
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewcategory = itemView.findViewById(android.R.id.text1);
@@ -46,6 +52,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                 @Override
                 public void onClick(View v) {
                     Log.d("TAG", "onClick: " + category);
+                    mListner.gotoAppListFragment(category);
                 }
             });
         }
