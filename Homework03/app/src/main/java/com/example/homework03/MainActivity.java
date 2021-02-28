@@ -1,4 +1,5 @@
-package com.example.inclass05;
+package com.example.homework03;
+
 /*
     Assignment # In Class Assignment 05
     File Name Main
@@ -9,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.LoginListener, AppCategoriesFragment.AppCategoryListener, AppsListFragment.AppsListListener {
+public class MainActivity extends AppCompatActivity implements LoginFragment.LoginListener, AppCategoriesFragment.AppCategoryListener, AppListFragment.AppsListListener {
     String token;
     private static final String TAG = "TAG_MAIN";
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     @Override
     public void gotoAppListFragment(String category) {
         Log.d(TAG, "MAIN" + category);
-        AppsListFragment fragment = new AppsListFragment();
+        AppListFragment fragment = new AppListFragment();
         fragment.setCategory(category, token);
         getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).addToBackStack("CATEGORY").commit();
     }

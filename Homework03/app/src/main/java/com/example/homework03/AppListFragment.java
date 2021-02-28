@@ -1,4 +1,5 @@
-package com.example.inclass05;
+package com.example.homework03;
+
 /*
     Assignment # In Class Assignment 05
     File Name App list Fragment
@@ -9,24 +10,25 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class AppsListFragment extends Fragment {
+public class AppListFragment extends Fragment {
     private static final String TAG = "TAG_APPSLIST";
     String category, token;
-    ListView listView_apps;
 
 
-    public AppsListFragment() {
+
+    public AppListFragment() {
         // Required empty public constructor
     }
 
@@ -36,19 +38,14 @@ public class AppsListFragment extends Fragment {
         if(category!=null) {
             getActivity().setTitle(category);
         }
-        View view =  inflater.inflate(R.layout.fragment_apps_list, container, false);
-        listView_apps = view.findViewById(R.id.listview_apps);
+        View view =  inflater.inflate(R.layout.fragment_app_list, container, false);
+        RecyclerView recyclerView_app = view.findViewById(R.id.recyclerView_app);
+
+
         DataServices.getAppsByCategory(token, category, new DataServices.DataResponse<DataServices.App>() {
             @Override
             public void onSuccess(ArrayList<DataServices.App> data) {
-                AppAdapter adapter = new AppAdapter(getContext(), R.layout.app_item, data);
-                listView_apps.setAdapter(adapter);
-                listView_apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        mListner.gotoAppDetailsFragment(data.get(position));
-                    }
-                });
+                //app Adpter and recyclerview
             }
 
             @Override
@@ -65,12 +62,12 @@ public class AppsListFragment extends Fragment {
         this.token = token;
     }
 
-    AppsListFragment.AppsListListener mListner;
+    AppListFragment.AppsListListener mListner;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mListner = (AppsListFragment.AppsListListener)(context);
+        mListner = (AppListFragment.AppsListListener)(context);
     }
 
     interface AppsListListener{

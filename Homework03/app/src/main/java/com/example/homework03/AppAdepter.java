@@ -1,4 +1,5 @@
-package com.example.inclass05;
+package com.example.homework03;
+
 /*
     Assignment # In Class Assignment 05
     File Name AppAdepter
@@ -17,8 +18,8 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class AppAdapter extends ArrayAdapter<DataServices.App> {
-    public AppAdapter(@NonNull Context context, int resource, @NonNull List<DataServices.App> apps) {
+public class AppAdepter extends ArrayAdapter<DataServices.App> {
+    public AppAdepter(@NonNull Context context, int resource, @NonNull List<DataServices.App> apps) {
         super(context, resource, apps);
     }
 
