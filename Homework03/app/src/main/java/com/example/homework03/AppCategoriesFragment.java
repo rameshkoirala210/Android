@@ -1,7 +1,7 @@
 package com.example.homework03;
 
 /*
-    Assignment # In Class Assignment 05
+    Assignment # Homework #03
     File Name App Category Fragment
     Full name of the student - Ramesh Koirala, Anirudh Shankar
 */
@@ -64,7 +64,7 @@ public class AppCategoriesFragment extends Fragment {
                 @Override
                 public void onSuccess(ArrayList<String> data) {
                   //recyclerview suff
-                    Log.d(TAG, "onSuccess: " + data.toString());
+
                    adapter = new CategoryRecyclerAdapter(data, mListner);
                    recyclerView_appCategory.setAdapter(adapter);
                 }

@@ -57,6 +57,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="25dp"
+        android:textStyle="bold"
         android:text="@string/String_Genres"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,8 +68,9 @@
         android:layout_width="411dp"
         android:layout_height="460dp"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="1dp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 

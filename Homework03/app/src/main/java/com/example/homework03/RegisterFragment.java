@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /*
-    Assignment # In Class Assignment 05
+    Assignment # Homework #03
     File Name Register Fragment
     Full name of the student - Ramesh Koirala, Anirudh Shankar
 */
@@ -55,7 +55,7 @@ public class RegisterFragment extends Fragment {
                         }
                         @Override
                         public void onFailure(DataServices.RequestException exception) {
-                            Toast.makeText(getActivity(), "Unable to Register!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Unable to Register, Try different username!!", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

@@ -1,7 +1,7 @@
 package com.example.homework03;
 
 /*
-    Assignment # In Class Assignment 05
+    Assignment # Homework #03
     File Name App list Fragment
     Full name of the student - Ramesh Koirala, Anirudh Shankar
 */
@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,9 @@ import java.util.ArrayList;
 public class AppListFragment extends Fragment {
     private static final String TAG = "TAG_APPSLIST";
     String category, token;
+    RecyclerView recyclerView_app;
+    LinearLayoutManager layoutManager;
+    AppListRecyclerAdapter adapter;
 
 
 
@@ -39,13 +43,18 @@ public class AppListFragment extends Fragment {
             getActivity().setTitle(category);
         }
         View view =  inflater.inflate(R.layout.fragment_app_list, container, false);
-        RecyclerView recyclerView_app = view.findViewById(R.id.recyclerView_app);
+        recyclerView_app = view.findViewById(R.id.recyclerView_app);
+        recyclerView_app.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView_app.setLayoutManager(layoutManager);
 
 
         DataServices.getAppsByCategory(token, category, new DataServices.DataResponse<DataServices.App>() {
             @Override
             public void onSuccess(ArrayList<DataServices.App> data) {
                 //app Adpter and recyclerview
+                adapter = new AppListRecyclerAdapter(data, mListner);
+                recyclerView_app.setAdapter(adapter);
             }
 
             @Override

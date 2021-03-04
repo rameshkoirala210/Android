@@ -1,7 +1,7 @@
 package com.example.homework03;
 
 /*
-    Assignment # In Class Assignment 05
+    Assignment # Homework #03
     File Name Main
     Full name of the student - Ramesh Koirala, Anirudh Shankar
 */
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     @Override
     public void gotoAppDetailsFragment(DataServices.App app) {
         AppDetailsFragment fragment = new AppDetailsFragment();
+        Log.d(TAG, "gotoAppDetailsFragment: " + app.toString());
         fragment.setApp(app);
         getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).addToBackStack("APPSLIST").commit();
     }

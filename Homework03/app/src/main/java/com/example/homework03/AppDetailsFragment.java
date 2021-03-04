@@ -1,15 +1,17 @@
 package com.example.homework03;
 
 /*
-    Assignment # In Class Assignment 05
+    Assignment # Homework #03
     File Name App Details Fragment
     Full name of the student - Ramesh Koirala, Anirudh Shankar
 */
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ public class AppDetailsFragment extends Fragment {
     DataServices.App app;
     TextView appName, artistName, releaseDate;
     RecyclerView recyclerview_genres;
+    LinearLayoutManager layoutManager;
+    AppDetailsRecyclerAdapter adapter;
 
     public AppDetailsFragment() {
         // Required empty public constructor
@@ -36,14 +40,17 @@ public class AppDetailsFragment extends Fragment {
         artistName = view.findViewById(R.id.appDetailsArtist);
         releaseDate = view.findViewById(R.id.appDetailsDate);
         recyclerview_genres = view.findViewById(R.id.recyclerview_genres);
+        recyclerview_genres.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerview_genres.setLayoutManager(layoutManager);
 
         if (app!=null){
             appName.setText(app.name);
             artistName.setText(app.artistName);
             releaseDate.setText(app.releaseDate);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, app.genres);
-            //recyclerview_genres.setAdapter(adapter);
+            adapter = new AppDetailsRecyclerAdapter(app.genres);
+            recyclerview_genres.setAdapter(adapter);
         }
 
         return view;
