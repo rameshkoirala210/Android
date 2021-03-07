@@ -136,6 +136,7 @@ public class AppCategoriesFragment extends Fragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         //String x = strings.get(position);
+                        //xxxx
                         mListner.gotoAppListFragment(strings.get(position));
                     }
                 });
