@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Homework04</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="value_Email">Email</string>
+    <string name="value_Password">Password</string>
+    <string name="button_Login">Login</string>
+    <string name="button_NewAccount">Create New Account</string>
+    <string name="text_Name">Name</string>
+    <string name="button_Submit">Submit</string>
+    <string name="button_Cancel">Cancel</string>
+    <string name="text_Welcome">Welcome !!</string>
+    <string name="button_EditProfile">Edit Profile</string>
+    <string name="button_Logout">Log Out</string>
+    <string name="String_Genres">Genres</string>
+</resources>

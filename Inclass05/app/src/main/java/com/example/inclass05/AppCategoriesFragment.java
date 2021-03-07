@@ -61,7 +61,7 @@ public class AppCategoriesFragment extends Fragment {
                     Log.d(TAG, "onSuccess: 1");
                     listView_appCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        public void onItemClick(AdapterView<> parent, View view, int position, long id) {
                             String x = data.get(position);
                             //Log.d(TAG, "onItemClick: " + x);
                             mListner.gotoAppListFragment(data.get(position));
