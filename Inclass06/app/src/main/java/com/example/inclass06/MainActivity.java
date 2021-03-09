@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,6 +21,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         seekBarSelect = findViewById(R.id.seekBarSelect);
         progressBar = findViewById(R.id.progressBar);
 
-
         textViewComplexity.setText("1 Times");
         seekBarSelect.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -62,20 +63,51 @@ public class MainActivity extends AppCompatActivity {
         });
 
         threadpool = Executors.newFixedThreadPool(2);
+        ArrayList<Double> randomNums = new ArrayList<>();
 
         findViewById(R.id.buttonThread).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String[] str = textViewComplexity.getText().toString().split(" ");
                 Integer number = Integer.parseInt(str[0]);
-
-                threadpool.execute(new doThreadwork(number));
+                Log.d(TAG, "onClick: In thread");
                 handler = new Handler(new Handler.Callback() {
                     @Override
                     public boolean handleMessage(@NonNull Message msg) {
+                        switch (msg.what){
+                            case doThreadwork.STATUS_START:
+                                Log.d(TAG, "handleMessage: Start Progress");
+                                findViewById(R.id.buttonAsyncTask).setEnabled(false);
+                                findViewById(R.id.buttonThread).setEnabled(false);
+                                break;
+
+                            case doThreadwork.STATUS_STOP:
+                                Log.d(TAG, "handleMessage: Stop Progress");
+                                findViewById(R.id.buttonAsyncTask).setEnabled(true);
+                                findViewById(R.id.buttonThread).setEnabled(true);
+                                break;
+
+                            case doThreadwork.STATUS_PROGRESS:
+                                Log.d(TAG, "handleMessage: Status Progress");
+
+                                Double total = 0.0;
+                                for (int i = 0; i < randomNums.size(); i++) {
+                                    total += randomNums.get(i);
+                                }
+                                textViewAverage.setText("Average: " + total / randomNums.size());
+
+                                progressBar.setMax(number);
+                                progressBar.setProgress(msg.arg1);
+                                textViewProgress.setText(msg.arg1 + "/" + number);
+
+                                ArrayAdapter<Double> adapter = new ArrayAdapter<Double>(MainActivity.this, android.R.layout.simple_list_item_1, randomNums);
+                                listViewnumbers.setAdapter(adapter);
+                                break;
+                        }
                         return false;
                     }
                 });
+                threadpool.execute(new doThreadwork(number, randomNums));
             }
         });
         findViewById(R.id.buttonAsyncTask).setOnClickListener(new View.OnClickListener() {
@@ -89,13 +121,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     class doThreadwork implements Runnable {
+        static final int STATUS_START = 0x00;
+        static final int STATUS_PROGRESS = 0x01;
+        static final int STATUS_STOP = 0x02;
         Integer num;
-        public doThreadwork(Integer num) {
+        ArrayList<Double> randomNumbers;
+        public doThreadwork(Integer num, ArrayList<Double> randomNums) {
             this.num = num;
+            this.randomNumbers = randomNums;
         }
         //TODO return using handaler
         public void run() {
+            Message startMessage = new Message();
+            startMessage.what = STATUS_START;
+            handler.sendMessage(startMessage);
 
+            randomNumbers.clear();
+            for(int i = 0; i < num; i++){
+                Message message = new Message();
+                message.what = STATUS_PROGRESS;
+                randomNumbers.add(HeavyWork.getNumber());
+                message.arg1 = i+1;
+                handler.sendMessage(message);
+            }
+
+
+            Message stopMessage = new Message();
+            stopMessage.what = STATUS_STOP;
+            handler.sendMessage(stopMessage);
         }
     }
     class doAsyncTask extends AsyncTask<Integer, Double, ArrayList<Double> >{
@@ -106,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             adapter = new ArrayAdapter<Double>(MainActivity.this, android.R.layout.simple_list_item_1, randomNumbers);
             listViewnumbers.setAdapter(adapter);
+            findViewById(R.id.buttonAsyncTask).setEnabled(false);
+            findViewById(R.id.buttonThread).setEnabled(false);
         }
 
         @Override
@@ -130,6 +185,13 @@ public class MainActivity extends AppCompatActivity {
                 total += randomNumbers.get(i);
             }
             textViewAverage.setText("Average: " + total / randomNumbers.size());
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Double> doubles) {
+            super.onPostExecute(doubles);
+            findViewById(R.id.buttonThread).setEnabled(true);
+            findViewById(R.id.buttonAsyncTask).setEnabled(true);
         }
     }
 }

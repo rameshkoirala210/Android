@@ -1,6 +1,6 @@
 package com.example.hw04;
 /*
-    Assignment # In Class Assignment 05
+    Assignment # Homework 04
     File Name Login Fragment
     Full name of the student - Ramesh Koirala, Anirudh Shankar
 */
@@ -44,22 +44,10 @@ public class LoginFragment extends Fragment {
                 String email =  loginEmail.getText().toString();
                 String password = loginpassword.getText().toString();
                 if(email.isEmpty() || password.isEmpty()){
-                    Toast.makeText(getActivity(), "Please Enter Email/Password!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please Enter Email/Password!!", Toast.LENGTH_SHORT).show();
                 }else{
                     new doAsyncTaskLogin().execute(email, password);
-//                    DataServices.login(email, password, new DataServices.AuthResponse() {
-//                        @Override
-//                        public void onSuccess(String token) {
-//                            Toast.makeText(getActivity(), "Login Succesful!!", Toast.LENGTH_SHORT).show();
-//                            //getFragmentManager().beginTransaction().replace(R.id.layout, AccountFragment.newInstance(account)).commit();
-//                            mListner.goToAppCategoryFragment(token);
-//                        }
-//
-//                        @Override
-//                        public void onFailure(DataServices.RequestException exception) {
-//                            Toast.makeText(getActivity(), "Unable to Login!!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
+
                 }
             }
         });
@@ -103,10 +91,9 @@ public class LoginFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             if (s.isEmpty()){
-                Toast.makeText(getActivity(), "Unable to Login!!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onClick:notable");
+                Toast.makeText(getContext(), "Unable to Login!!", Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(getActivity(), "Login Succesful!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Login Succesful!!", Toast.LENGTH_SHORT).show();
                 mListner.goToAppCategoryFragment(s);
             }
         }

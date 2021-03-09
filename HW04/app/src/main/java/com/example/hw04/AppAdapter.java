@@ -1,6 +1,6 @@
 package com.example.hw04;
 /*
-    Assignment # In Class Assignment 05
+    Assignment # Homework 04
     File Name AppAdepter
     Full name of the student - Ramesh Koirala, Anirudh Shankar
 */

@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 /*
-    Assignment # In Class Assignment 05
+    Assignment # Homework 04
     File Name Register Fragment
     Full name of the student - Ramesh Koirala, Anirudh Shankar
 */
@@ -49,17 +49,6 @@ public class RegisterFragment extends Fragment {
                     Toast.makeText(getActivity(), "EMAIL incorrect", Toast.LENGTH_SHORT).show();
                 }  else{
                         new doAsyncTaskRegister().execute(name,email, password);
-//                    DataServices.register(name, email, password, new DataServices.AuthResponse() {
-//                        @Override
-//                        public void onSuccess(String token) {
-//                            Toast.makeText(getActivity(), "Registration Succesful!!", Toast.LENGTH_SHORT).show();
-//                            mListner.goToAppCategoryFragment(token);
-//                        }
-//                        @Override
-//                        public void onFailure(DataServices.RequestException exception) {
-//                            Toast.makeText(getActivity(), "Unable to Register!!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
                 }
             }
         });

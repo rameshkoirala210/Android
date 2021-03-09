@@ -1,10 +1,11 @@
 package com.example.hw04;
 /*
-    Assignment # In Class Assignment 05
+    Assignment # Homework 04
     File Name App list Fragment
     Full name of the student - Ramesh Koirala, Anirudh Shankar
 */
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -38,25 +39,7 @@ public class AppsListFragment extends Fragment {
         }
         View view =  inflater.inflate(R.layout.fragment_apps_list, container, false);
         listView_apps = view.findViewById(R.id.listview_apps);
-//        DataServices.getAppsByCategory(token, category, new DataServices.DataResponse<DataServices.App>() {
-//            @Override
-//            public void onSuccess(ArrayList<DataServices.App> data) {
-//                AppAdapter adapter = new AppAdapter(getContext(), R.layout.app_item, data);
-//                listView_apps.setAdapter(adapter);
-//                listView_apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        mListner.gotoAppDetailsFragment(data.get(position));
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onFailure(DataServices.RequestException exception) {
-//                Toast.makeText(getContext(), TAG + "FAILED", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
+        new doAsyncTaskgetAppbycategory().execute(token,category);
         return view;
     }
 
@@ -75,5 +58,36 @@ public class AppsListFragment extends Fragment {
 
     interface AppsListListener{
         void gotoAppDetailsFragment(DataServices.App app);
+    }
+    class doAsyncTaskgetAppbycategory extends AsyncTask<String, Integer, ArrayList<DataServices.App>> {
+
+        @Override
+        protected ArrayList<DataServices.App> doInBackground(String... strings) {
+            String token = strings[0];
+            String category = strings[1];
+            ArrayList<DataServices.App> data = null;
+            try {
+                data = DataServices.getAppsByCategory(token,category);
+            } catch (DataServices.RequestException e) {
+                e.printStackTrace();
+            }
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<DataServices.App> apps) {
+            if (apps == null){
+                Toast.makeText(getContext(), TAG + "FAILED", Toast.LENGTH_SHORT).show();
+            }else{
+                AppAdapter adapter = new AppAdapter(getContext(), R.layout.app_item, apps);
+                listView_apps.setAdapter(adapter);
+                listView_apps.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        mListner.gotoAppDetailsFragment(apps.get(position));
+                    }
+                });
+            }
+        }
     }
 }

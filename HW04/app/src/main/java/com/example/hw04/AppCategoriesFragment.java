@@ -1,6 +1,6 @@
 package com.example.hw04;
 /*
-    Assignment # In Class Assignment 05
+    Assignment # Homework 04
     File Name App Category Fragment
     Full name of the student - Ramesh Koirala, Anirudh Shankar
 */
@@ -45,38 +45,8 @@ public class AppCategoriesFragment extends Fragment {
         listView_appCategory = view.findViewById(R.id.listview_category);
 
         if (token != null){
-            new doAsyncTaskListview().execute();
-//            DataServices.getAccount(token, new DataServices.AccountResponse() {
-//                @Override
-//                public void onSuccess(DataServices.Account account) {
-//                    textView_welcome.setText("Welcome " + account.getName());
-//                }
-//                @Override
-//                public void onFailure(DataServices.RequestException exception) {
-//                    Toast.makeText(getContext(), "Unable to get account", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-
-//            DataServices.getAppCategories(token, new DataServices.DataResponse<String>() {
-//                @Override
-//                public void onSuccess(ArrayList<String> data) {
-//                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, data);
-//                    listView_appCategory.setAdapter(adapter);
-//                    Log.d(TAG, "onSuccess: 1");
-//                    listView_appCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                        @Override
-//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                            String x = data.get(position);
-//                            //Log.d(TAG, "onItemClick: " + x);
-//                            mListner.gotoAppListFragment(data.get(position));
-//                        }
-//                    });
-//                }
-//                @Override
-//                public void onFailure(DataServices.RequestException exception) {
-//                    Toast.makeText(getContext(), "Unable to retrieve data", Toast.LENGTH_SHORT).show();
-//                }
-//            });
+            new doAsyncTaskgetAccount().execute(token);
+            new doAsyncTaskAppCaregories().execute();
         }
         view.findViewById(R.id.buttonLogOut).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +75,7 @@ public class AppCategoriesFragment extends Fragment {
     }
 
 
-    class doAsyncTaskListview extends AsyncTask<ListView, Integer, ArrayList<String>> {
+    class doAsyncTaskAppCaregories extends AsyncTask<ListView, Integer, ArrayList<String>> {
         ArrayList<String> data = new ArrayList<>();
         ArrayAdapter<String> adapter;
 
@@ -127,19 +97,39 @@ public class AppCategoriesFragment extends Fragment {
             listView_appCategory.setAdapter(adapter);
 
             if (strings == null){
-                Log.d(TAG, "onPostExecute: Unable to retrieve data");
                 Toast.makeText(getContext(), "Unable to retrieve data", Toast.LENGTH_SHORT).show();
             }else {
-                //data = strings;
-                //adapter.notifyDataSetChanged();
                 listView_appCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //String x = strings.get(position);
-                        //xxxx
                         mListner.gotoAppListFragment(strings.get(position));
                     }
                 });
+            }
+        }
+
+
+    }
+    class doAsyncTaskgetAccount extends AsyncTask<String, Integer, DataServices.Account>{
+
+        @Override
+        protected DataServices.Account doInBackground(String... strings) {
+            String token = strings[0];
+            DataServices.Account data = null;
+            try {
+                data = DataServices.getAccount(token);
+            } catch (DataServices.RequestException e) {
+                e.printStackTrace();
+            }
+            return data;
+        }
+
+        @Override
+        protected void onPostExecute(DataServices.Account account) {
+            if (account == null){
+                Toast.makeText(getContext(), "Unable to get account", Toast.LENGTH_SHORT).show();
+            }else{
+                textView_welcome.setText("Welcome " + account.getName());
             }
         }
     }
