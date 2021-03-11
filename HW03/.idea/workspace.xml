@@ -5,27 +5,47 @@
       <config />
     </shared>
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="93b9bad5-3bf8-4238-8169-43b886303e86" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/java/com/example/homework04/AppAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/java/com/example/homework04/AppCategoriesFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/java/com/example/homework04/AppDetailsFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/java/com/example/homework04/AppsListFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/java/com/example/homework04/DataServices.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/java/com/example/homework04/LoginFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/java/com/example/homework04/RegisterFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/res/layout/app_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/res/layout/fragment_app_categories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/res/layout/fragment_app_details.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/res/layout/fragment_apps_list.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/res/layout/fragment_login.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Homework04/app/src/main/res/layout/fragment_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ConcurrencyPractice/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/../ConcurrencyPractice/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../HW03.zip" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/HW03.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/Contact.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/ContactDetailsFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/ContactsListFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/EditContactFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/NewContactFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/res/layout/app_items.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/res/layout/fragment_contact_details.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/res/layout/fragment_contacts_list.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/res/layout/fragment_edit_contact.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/res/layout/fragment_new_contact.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Group#18_HW04.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Homework03/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/../Homework03/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Inclass05/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/../Inclass05/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Inclass06/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/../Inclass06/gradlew" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,16 +68,17 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Homework03" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
+      <method v="2" />
     </configuration>
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="HW03.app" />
@@ -112,9 +133,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
       <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
+      <method v="2" />
     </configuration>
   </component>
   <component name="SvnConfiguration">
@@ -129,5 +148,23 @@
       <updated>1615137929469</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1615481209741">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1615481209741" />
   </component>
 </project>
