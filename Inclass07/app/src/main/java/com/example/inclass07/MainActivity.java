@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ContactsListFragment.ContactListListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,4 +14,13 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.layout, new ContactsListFragment()).commit();
     }
 
+    @Override
+    public void gotoContactetailsFrangment(String category) {
+
+    }
+
+    @Override
+    public void delete() {
+
+    }
 }

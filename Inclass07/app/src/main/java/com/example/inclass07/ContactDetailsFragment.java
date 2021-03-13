@@ -26,4 +26,7 @@ public class ContactDetailsFragment extends Fragment {
 
         return v;
     }
+
+    public class ContactDetailsListener {
+    }
 }

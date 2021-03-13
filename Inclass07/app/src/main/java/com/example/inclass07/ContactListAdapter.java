@@ -12,10 +12,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -27,42 +29,76 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-public class ContactListAdapter extends ArrayAdapter<Contact>{
+public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder> {
+    ArrayList<Contact> contacts;
     private final OkHttpClient client = new OkHttpClient();
+    ContactsListFragment.ContactListListener mListener;
 
-    public ContactListAdapter(@NonNull Context context, int resource, @NonNull List<Contact> objects) {
-        super(context, resource, objects);
+    public ContactListAdapter(ArrayList<Contact> contacts, ContactsListFragment.ContactListListener mListener){
+        this.contacts = contacts;
+        this.mListener = mListener;
     }
-
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        if (convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.app_items, parent, false);
-        }
-        Contact contact = getItem(position);
-        TextView id = convertView.findViewById(R.id.textViewID);
-        TextView name = convertView.findViewById(R.id.textViewName);
-        TextView email = convertView.findViewById(R.id.textViewEmail);
-        TextView type = convertView.findViewById(R.id.textViewType);
-        TextView phoneNumber = convertView.findViewById(R.id.textViewPhoneNumber);
-        Button delete = convertView.findViewById(R.id.buttonDelete);
-
-        id.setText(contact.id);
-        name.setText(contact.name);
-        email.setText(contact.email);
-        type.setText(contact.type);
-        phoneNumber.setText(contact.phone);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteContacts(contact.id);
-            }
-        });
-
-        return convertView;
+    public ContactListAdapter.ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.app_items, parent, false);
+        ContactsViewHolder contactsViewHolder = new ContactsViewHolder(view, ContactListAdapter.this);
+        return contactsViewHolder;
     }
-    void deleteContacts(String id){
+
+    @Override
+    public void onBindViewHolder(@NonNull ContactListAdapter.ContactsViewHolder holder, int position) {
+        Contact contact = contacts.get(position);
+        holder.contact = contact;
+        holder.position = String.valueOf(contacts.get(position));
+        holder.tvId.setText(contact.id);
+        holder.tvName.setText(contact.name);
+        holder.tvEmail.setText(contact.email);
+        holder.tvType.setText(contact.type);
+        holder.tvPhone.setText(contact.phone);
+        holder.mListener = this.mListener;
+    }
+
+    @Override
+    public int getItemCount() {
+        return this.contacts.size();
+    }
+
+    public class ContactsViewHolder extends RecyclerView.ViewHolder {
+        TextView tvId, tvName, tvEmail, tvPhone, tvType;
+        String position;
+        Button btnDelete;
+        Contact contact;
+        ContactsListFragment.ContactListListener mListener;
+
+        public ContactsViewHolder(@NonNull View itemView, ContactListAdapter adapter) {
+            super(itemView);
+            tvId = itemView.findViewById(R.id.textViewID);
+            tvName = itemView.findViewById(R.id.textViewName);
+            tvEmail = itemView.findViewById(R.id.textViewEmail);
+            tvType = itemView.findViewById(R.id.textViewType);
+            tvPhone = itemView.findViewById(R.id.textViewPhoneNumber);
+            btnDelete = itemView.findViewById(R.id.buttonDelete);
+
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("TAG", "onClick: Button has been clicked");
+                    deleteContacts(position);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.gotoContactetailsFrangment(position);
+                }
+            });
+        }
+    }
+
+     void deleteContacts(String id){
         RequestBody formBody = new FormBody.Builder()
             .add("id" , id)
             .build();
@@ -86,3 +122,4 @@ public class ContactListAdapter extends ArrayAdapter<Contact>{
 
     }
 }
+

@@ -1,8 +1,12 @@
 package com.example.inclass07;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -14,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.inclass07.ContactDetailsFragment.ContactDetailsListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -30,8 +36,11 @@ import okhttp3.Response;
 import okhttp3.*;
 
 public class ContactsListFragment extends Fragment {
-    ListView listViewContactlist;
+    private static final String TAG = "TAGContactList";
+    RecyclerView recyclerViewContacts;
     ArrayList<Contact> contacts = new ArrayList<>();
+    LinearLayoutManager layoutManager;
+    ContactListAdapter adapter;
 
     private final OkHttpClient client = new OkHttpClient();
 
@@ -44,17 +53,21 @@ public class ContactsListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_contacts_list, container, false);
 
-        listViewContactlist = v.findViewById(R.id.listViewContactlist);
-
-
+        recyclerViewContacts = v.findViewById(R.id.recyclerViewContacts);
+        recyclerViewContacts.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerViewContacts.setLayoutManager(layoutManager);
         getcontacts();
-        listViewContactlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String x = String.valueOf(contacts.get(position));
-                Log.d("TAG", "onItemClick: " + x);
-            }
-        });
+
+//        adapter = new ContactListAdapter(contacts,mListener);
+//        recyclerViewContacts.setAdapter(adapter);
+//        recyclerViewContacts.setAdapter(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String x = String.valueOf(contacts.get(position));
+//                Log.d("TAG", "onItemClick: " + x);
+//            }
+//        });
 
 
         return v;
@@ -73,22 +86,41 @@ public class ContactsListFragment extends Fragment {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()){
                     String body = response.body().string();
+                    Log.d(TAG, "onResponse: " + body);
+//                    for (int i = 0; i < 10; i++){
+//                        contacts.add(new Contact("ID" + i, "RAMEHS", "RAMEHS", "PHONE", "TYPE"));
+//                    }
+                    if (body.equals("")){
 
-                    String[] lines = body.split("\n");//split the entire body into each line
-                    for (String line: lines){ //extract contact data from one line
-                        String[] contactData = line.split(",");
-                        contacts.add(new Contact(contactData[0], contactData[1], contactData[2], contactData[3], contactData[4]));
-                    }
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ContactListAdapter adapter = new ContactListAdapter(getContext(), R.layout.app_items, contacts);
-                            listViewContactlist.setAdapter(adapter);
+                    } else {
+                        String[] lines = body.split("\n");//split the entire body into each line
+                        for (String line: lines){ //extract contact data from one line
+                            String[] contactData = line.split(",");
+                            contacts.add(new Contact(contactData[0], contactData[1], contactData[2], contactData[3], contactData[4]));
                         }
-                    });
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter = new ContactListAdapter(contacts,mListener);
+                                recyclerViewContacts.setAdapter(adapter);
+                            }
+                        });
+                    }
                 }
             }
         });
 
+    }
+    ContactsListFragment.ContactListListener mListener;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mListener = (ContactsListFragment.ContactListListener)(context);
+    }
+
+    interface ContactListListener{
+        void gotoContactetailsFrangment(String category);
+        void delete();
     }
 }
