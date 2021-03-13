@@ -91,6 +91,4 @@ public class ContactsListFragment extends Fragment {
         });
 
     }
-
-
 }
