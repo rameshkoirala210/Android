@@ -15,12 +15,7 @@ public class MainActivity extends AppCompatActivity implements ContactsListFragm
     }
 
     @Override
-    public void gotoContactetailsFrangment(String category) {
-
-    }
-
-    @Override
-    public void delete() {
-
+    public void gotoContactdetailsFragment(String category) {
+        getSupportFragmentManager().beginTransaction().add(R.id.layout, new ContactDetailsFragment()).commit();
     }
 }

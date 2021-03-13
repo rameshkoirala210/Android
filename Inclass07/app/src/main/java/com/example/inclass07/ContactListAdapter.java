@@ -49,8 +49,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ContactListAdapter.ContactsViewHolder holder, int position) {
         Contact contact = contacts.get(position);
+        holder.mPosition = position;
         holder.contact = contact;
-        holder.position = String.valueOf(contacts.get(position));
+        holder.position = String.valueOf(contacts.get(position).id);
         holder.tvId.setText(contact.id);
         holder.tvName.setText(contact.name);
         holder.tvEmail.setText(contact.email);
@@ -69,6 +70,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         String position;
         Button btnDelete;
         Contact contact;
+        int mPosition;
         ContactsListFragment.ContactListListener mListener;
 
         public ContactsViewHolder(@NonNull View itemView, ContactListAdapter adapter) {
@@ -85,6 +87,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 public void onClick(View v) {
                     Log.d("TAG", "onClick: Button has been clicked");
                     deleteContacts(position);
+                    contacts.remove(mPosition);
                     adapter.notifyDataSetChanged();
                 }
             });
@@ -92,7 +95,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.gotoContactetailsFrangment(position);
+                    mListener.gotoContactdetailsFragment(position);
                 }
             });
         }

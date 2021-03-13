@@ -59,6 +59,7 @@ public class ContactsListFragment extends Fragment {
         recyclerViewContacts.setLayoutManager(layoutManager);
         getcontacts();
 
+
 //        adapter = new ContactListAdapter(contacts,mListener);
 //        recyclerViewContacts.setAdapter(adapter);
 //        recyclerViewContacts.setAdapter(new AdapterView.OnItemClickListener() {
@@ -120,7 +121,6 @@ public class ContactsListFragment extends Fragment {
     }
 
     interface ContactListListener{
-        void gotoContactetailsFrangment(String category);
-        void delete();
+        void gotoContactdetailsFragment(String category);
     }
 }
