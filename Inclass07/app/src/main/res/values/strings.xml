@@ -3,4 +3,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="button_delete">Delete</string>
+    <string name="txtName">Name</string>
+    <string name="txtEmail">Email</string>
+    <string name="txtPhone">Phone Number</string>
+    <string name="txtType">Type</string>
+    <string name="button_Update">Update</string>
+    <string name="button_Submit">Submit</string>
+    <string name="button_Cancel">Cancel</string>
+    <string name="btnAdd">Add</string>
+    <string name="txtID">ID</string>
+
 </resources>

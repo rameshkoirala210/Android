@@ -95,7 +95,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.gotoContactdetailsFragment(position);
+                    mListener.gotoContactdetailsFragment(mPosition, contacts);
                 }
             });
         }

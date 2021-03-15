@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.inclass07.ContactDetailsFragment.ContactDetailsListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -52,6 +51,7 @@ public class ContactsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_contacts_list, container, false);
+        getActivity().setTitle("Contacts List Screen");
 
         recyclerViewContacts = v.findViewById(R.id.recyclerViewContacts);
         recyclerViewContacts.setHasFixedSize(true);
@@ -60,17 +60,12 @@ public class ContactsListFragment extends Fragment {
         getcontacts();
 
 
-//        adapter = new ContactListAdapter(contacts,mListener);
-//        recyclerViewContacts.setAdapter(adapter);
-//        recyclerViewContacts.setAdapter(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String x = String.valueOf(contacts.get(position));
-//                Log.d("TAG", "onItemClick: " + x);
-//            }
-//        });
-
-
+        v.findViewById(R.id.buttonAdd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.gotoNewContactFragment(contacts);
+            }
+        });
         return v;
     }
 
@@ -88,9 +83,6 @@ public class ContactsListFragment extends Fragment {
                 if(response.isSuccessful()){
                     String body = response.body().string();
                     Log.d(TAG, "onResponse: " + body);
-//                    for (int i = 0; i < 10; i++){
-//                        contacts.add(new Contact("ID" + i, "RAMEHS", "RAMEHS", "PHONE", "TYPE"));
-//                    }
                     if (body.equals("")){
 
                     } else {
@@ -121,6 +113,7 @@ public class ContactsListFragment extends Fragment {
     }
 
     interface ContactListListener{
-        void gotoContactdetailsFragment(String category);
+        void gotoContactdetailsFragment(int position,ArrayList<Contact> contacts);
+        void gotoNewContactFragment(ArrayList<Contact> contacts);
     }
 }
