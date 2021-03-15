@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,10 +50,6 @@ public class NewContactFragment extends Fragment {
         editTextNewPhone = v.findViewById(R.id.editTextNewPhone);
         editTextNewType = v.findViewById(R.id.editTextNewType);
 
-        Contact contact = new Contact("idishere", editTextNewName.getText().toString(),
-                editTextNewEmail.getText().toString(),
-                editTextNewPhone.getText().toString(),
-                editTextNewType.getText().toString());
         v.findViewById(R.id.buttonSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +78,12 @@ public class NewContactFragment extends Fragment {
                             });
                     builder.show();
                 }else{
-                    contacts.add(contact);
-                    createContacts(contact);
-                    mListener.gobacktoContractlist();
+                    //contacts.add(contact);
+                    createContacts(editTextNewName.getText().toString(),
+                            editTextNewEmail.getText().toString(),
+                            editTextNewPhone.getText().toString(),
+                            editTextNewType.getText().toString());
+                    //mListener.gobacktoContractlist();
                 }
             }
         });
@@ -96,12 +96,12 @@ public class NewContactFragment extends Fragment {
 
         return v;
     }
-    void createContacts(Contact contact) {
+    void createContacts(String name, String email, String phone, String type) {
         RequestBody formBody = new FormBody.Builder()
-                .add("name" , contact.name)
-                .add("email" , contact.email)
-                .add("phone" , contact.phone)
-                .add("type" , contact.type)
+                .add("name" , name)
+                .add("email" , email)
+                .add("phone" , phone)
+                .add("type" , type)
                 .build();
 
         Request request = new Request.Builder()
@@ -116,10 +116,19 @@ public class NewContactFragment extends Fragment {
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                ResponseBody responseBody = response.body();
-                String body = responseBody.string();
-
-                Log.d("TAG", "onResponse: " + body);
+                if (!response.isSuccessful()) {
+                    Log.d("TAG", "onResponse: FAILED " + response.body().string());
+                } else {
+                    ResponseBody responseBody = response.body();
+                    String body = responseBody.string();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mListener.gobacktoContractlist();
+                        }
+                    });
+                    Log.d("TAG", "onResponse: " + body + response.isSuccessful());
+                }
             }
         });
     }

@@ -82,7 +82,7 @@ public class ContactsListFragment extends Fragment {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()){
                     String body = response.body().string();
-                    Log.d(TAG, "onResponse: " + body);
+                    //Log.d(TAG, "onResponse: " + body);
                     if (body.equals("")){
 
                     } else {

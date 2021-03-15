@@ -57,11 +57,6 @@ public class EditContactFragment extends Fragment {
         editUpdateNumber.setText(contacts.get(position).phone.toString());
         editTextUpdateType.setText(contacts.get(position).type.toString());
 
-        Contact contact = new Contact(editTextUpdateID.getText().toString(),
-                editTextUpdateName.getText().toString(),
-                editTextUpdateEmail.getText().toString(),
-                editUpdateNumber.getText().toString(),
-                editTextUpdateType.getText().toString());
 
         v.findViewById(R.id.buttonedtiContractUpdate).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +112,7 @@ public class EditContactFragment extends Fragment {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 ResponseBody responseBody = response.body();
                 String body = responseBody.string();
-                Log.d("TAG", "onResponse: " + response.isSuccessful());
+                Log.d("TAG", "onResponse: " + response.isSuccessful() + body.toString());
             }
         });
     }
