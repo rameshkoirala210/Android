@@ -2,47 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="99f8b11d-afd3-4169-aa18-67be90caa1da" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/proguard-rules.pro" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/example/homework02/ExampleInstrumentedTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_create_task.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_display_task.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values-night/themes.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/arrays.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/example/homework02/ExampleUnitTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MidtermExam/app/src/main/java/com/example/midtermexam/DataServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/Contact.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/ContactDetailsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/ContactDetailsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/ContactListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/ContactListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/ContactsListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/ContactsListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/EditContactFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/EditContactFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/NewContactFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Inclass07/app/src/main/java/com/example/inclass07/NewContactFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/ExternalSortAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/ExternalSortAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/FilterByState.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/FilterByState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/SortFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/SortFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/UserFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/UserFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/UsersAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/java/com/example/midtermreview/UsersAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/res/layout/fragment_filter_by_state.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/res/layout/fragment_filter_by_state.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/res/layout/fragment_sort.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/res/layout/fragment_sort.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/res/layout/fragment_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/res/layout/fragment_user.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/res/layout/sort_list_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/res/layout/sort_list_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MidtermReview/app/src/main/res/layout/user_list_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../MidtermReview/app/src/main/res/layout/user_list_item.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +45,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../FragmentPractice" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">

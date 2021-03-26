@@ -1,5 +1,9 @@
 package com.example.inclass07;
-
+/*
+    Assignment # InClass 07
+    File Name Edit Contact Fragment
+    Full name of the student - Ramesh Koirala, Anirudh Shankar
+*/
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,6 +36,7 @@ public class EditContactFragment extends Fragment {
     private final OkHttpClient client = new OkHttpClient();
     EditText editTextUpdateName,editTextUpdateEmail,editUpdateNumber,editTextUpdateType,editTextUpdateID;
     ArrayList<Contact> contacts = new ArrayList<>();
+    ArrayList<String> missing = new ArrayList<>();
     int position;
 
     public EditContactFragment() {
@@ -61,12 +66,33 @@ public class EditContactFragment extends Fragment {
         v.findViewById(R.id.buttonedtiContractUpdate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(editTextUpdateID.getText().toString().isEmpty() ||
-                        editTextUpdateName.getText().toString().isEmpty() ||
-                        editTextUpdateEmail.getText().toString().isEmpty() ||
-                        editUpdateNumber.getText().toString().isEmpty() ||
-                        editTextUpdateType.getText().toString().isEmpty() ){
+                missing.clear();
+                if (editTextUpdateID.getText().toString().isEmpty()) {
+                    missing.add("ID");
+                }
+                if (editTextUpdateName.getText().toString().isEmpty()) {
+                    missing.add("Name");
+                }
+                if (editTextUpdateEmail.getText().toString().isEmpty()) {
+                    missing.add("Email");
+                }
+                if (editUpdateNumber.getText().toString().isEmpty()) {
+                    missing.add("Phone");
+                }
+                if (editTextUpdateType.getText().toString().isEmpty()) {
+                    missing.add("Type");
+                }
+                if(missing.size() > 0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Missing Field Detected")
+                            .setMessage("Please Enter In The Fields\n" + missing.toString())
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
+                                }
+                            });
+                    builder.show();
                 }else{
                     contacts.get(position).id = editTextUpdateID.getText().toString();
                     contacts.get(position).name = editTextUpdateName.getText().toString();

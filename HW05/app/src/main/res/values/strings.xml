@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">HW05</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textview_city">Selected City</string>
+    <string name="textview_Temp">Temperature</string>
+    <string name="textview_TempMax">Temperature Max</string>
+    <string name="textview_TempMin">Temperature Min</string>
+    <string name="textview_Description">Description</string>
+    <string name="textview_Humidity">Humidity</string>
+    <string name="textview_WindSpeed">Wind Speed</string>
+    <string name="textview_WindDegree">Wind Degree</string>
+    <string name="textview_Cloudiness">Cloudiness</string>
+    <string name="button_CheckForecast">Check Forecast</string>
+</resources>

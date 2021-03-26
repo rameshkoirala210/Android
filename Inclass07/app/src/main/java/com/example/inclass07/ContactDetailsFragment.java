@@ -1,4 +1,9 @@
 package com.example.inclass07;
+/*
+    Assignment # InClass 07
+    File Name Contact Details Fragment
+    Full name of the student - Ramesh Koirala, Anirudh Shankar
+*/
 
 import android.content.Context;
 import android.os.Bundle;

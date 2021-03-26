@@ -1,5 +1,9 @@
 package com.example.inclass07;
-
+/*
+    Assignment # InClass 07
+    File Name Contact List Adapter
+    Full name of the student - Ramesh Koirala, Anirudh Shankar
+*/
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;

@@ -1,5 +1,9 @@
 package com.example.inclass07;
-
+/*
+    Assignment # InClass 07
+    File Name New Contact Fragment
+    Full name of the student - Ramesh Koirala, Anirudh Shankar
+*/
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;

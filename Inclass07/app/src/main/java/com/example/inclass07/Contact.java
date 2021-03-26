@@ -1,6 +1,11 @@
 package com.example.inclass07;
 
 import java.io.Serializable;
+/*
+    Assignment # InClass 07
+    File Name Contact
+    Full name of the student - Ramesh Koirala, Anirudh Shankar
+*/
 
 public class Contact implements Serializable {
     String id, name, email, phone, type;
