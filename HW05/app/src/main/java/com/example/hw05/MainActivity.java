@@ -18,13 +18,13 @@ public class MainActivity extends AppCompatActivity implements CitiesListFragmen
     public void gotocurrentweatherfragment(String city) {
         CurrentWeatherFragment fragment = new CurrentWeatherFragment();
         fragment.setPosition(city);
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).addToBackStack(null).commit();
     }
 
     @Override
     public void gotoWeatherForecastFragment(String city) {
         WeatherForecastFragment fragment = new WeatherForecastFragment();
         fragment.setPosition(city);
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).addToBackStack(null).commit();
     }
 }

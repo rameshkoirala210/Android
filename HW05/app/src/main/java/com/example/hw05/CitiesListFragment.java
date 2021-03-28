@@ -19,6 +19,7 @@ import com.example.hw05.Data;
 import java.util.ArrayList;
 
 public class CitiesListFragment extends Fragment {
+    final String TAG = "TAGcity";
     ListView listViewCities;
     ArrayList<Data.City> cities = Data.cities;
     public CitiesListFragment() {
@@ -29,6 +30,7 @@ public class CitiesListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_cities_list, container, false);
+        getActivity().setTitle("Cities");
 
         listViewCities = v.findViewById(R.id.listViewCities);
 
@@ -39,7 +41,7 @@ public class CitiesListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String city = String.valueOf(cities.get(position));
-                Log.d("TAG", "onItemClick: " + city);
+                Log.d(TAG , "onItemClick: " + city);
                 mListener.gotocurrentweatherfragment(city);
             }
         });
