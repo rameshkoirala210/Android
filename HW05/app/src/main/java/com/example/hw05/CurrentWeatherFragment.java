@@ -31,7 +31,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-
+/*
+    Assignment # Homework-05
+    File Name Current Weather Fragment
+    Full name of the student - Ramesh Koirala, Anirudh Shankar
+*/
 public class CurrentWeatherFragment extends Fragment {
     private final OkHttpClient client = new OkHttpClient();
     Weather weather = new Weather();

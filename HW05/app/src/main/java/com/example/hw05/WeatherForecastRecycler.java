@@ -25,32 +25,44 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+/*
+    Assignment # Homework-05
+    File Name  Weather Forecast Adapter
+    Full name of the student - Ramesh Koirala, Anirudh Shankar
+*/
 public class WeatherForecastRecycler extends RecyclerView.Adapter<WeatherForecastRecycler.ForecastViewHolder> {
     private static String TAG = "TAG-Rforecast";
     ArrayList<Weather> weathers = new ArrayList<>();
     private final OkHttpClient client = new OkHttpClient();
     String url;
 
-    public WeatherForecastRecycler(String url) {
-        this.url = url;
-        Log.d(TAG, "WeatherForecastRecycler: CONSTRUCTOR CHECK");
+    public WeatherForecastRecycler(ArrayList<Weather> weathers) {
+        this.weathers = weathers;
+        //Log.d(TAG, "WeatherForecastRecycler: CONSTRUCTOR CHECK");
+        Log.d(TAG, "WeatherForecastRecycler: "+ weathers);
     }
 
     @NonNull
     @Override
     public WeatherForecastRecycler.ForecastViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.weather_forecast_recyclerview, parent, false);
-        ForecastViewHolder forecastViewHolder = new ForecastViewHolder(view, WeatherForecastRecycler.this);
+        ForecastViewHolder forecastViewHolder = new ForecastViewHolder(view);
         Log.d(TAG, "onCreateViewHolder: Inside OnCreateVIEW HOLDER");
         return forecastViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ForecastViewHolder holder, int position) {
-        holder.textViewRHumidity.setText("TEST");
-        getWeathers(url);
-        Log.d(TAG, "onBindViewHolder: ONBINDVIEWHOLDER");
+        holder.textViewRHumidity.setText("Humidity: " +weathers.get(position).humidity + "%");
+        holder.textViewRTemp.setText(weathers.get(position).temprature +"F");
+        holder.textViewRMaxTemp.setText("Max: " + weathers.get(position).tempratureMax +"F");
+        holder.textViewRMinTemp.setText("Min: " + weathers.get(position).tempratureMin + "F");
+        holder.textViewRClouds.setText(weathers.get(position).description);
+        holder.textViewRDate.setText(weathers.get(position).date);
+        String imgUrl = "https://openweathermap.org/img/wn/" + weathers.get(position).icon +"@2x.png";
+        Log.d(TAG, "onCreateView: " + imgUrl);
+        Picasso.get().load(imgUrl).into(holder.imageViewforecast);
+
     }
 
     @Override
@@ -60,89 +72,20 @@ public class WeatherForecastRecycler extends RecyclerView.Adapter<WeatherForecas
 
 
     public class ForecastViewHolder extends RecyclerView.ViewHolder {
+        ArrayList<Weather> weathers = new ArrayList<>();
         ImageView imageViewforecast;
-        TextView textViewRDate,textViewRTemp,textViewRMaxTemp,textViewRMinTemp,textViewRHumidity,textViewRClouds;
-        public ForecastViewHolder(@NonNull View itemView, WeatherForecastRecycler adapter) {
+        TextView textViewRDate, textViewRTemp, textViewRMaxTemp, textViewRMinTemp, textViewRHumidity, textViewRClouds;
+
+        public ForecastViewHolder(@NonNull View itemView) {
             super(itemView);
             Log.d(TAG, "ForecastViewHolder: INSIDE FORECASTVIEWHOLDER CONS");
-            imageViewforecast = itemView.findViewById(R.id.imageViewweather);
-            textViewRDate = itemView.findViewById(R.id.textViewTemprature);
-            textViewRTemp = itemView.findViewById(R.id.textViewTempratureMax);
-            textViewRMaxTemp = itemView.findViewById(R.id.textViewTempratureMin);
-            textViewRMinTemp = itemView.findViewById(R.id.textViewCloudiness);
-            textViewRHumidity = itemView.findViewById(R.id.textViewDescription);
-            textViewRClouds = itemView.findViewById(R.id.textViewHumidity);
-
+            imageViewforecast = itemView.findViewById(R.id.imageViewforecast);
+            textViewRDate = itemView.findViewById(R.id.textViewRDate);
+            textViewRTemp = itemView.findViewById(R.id.textViewRTemp);
+            textViewRMaxTemp = itemView.findViewById(R.id.textViewRMaxTemp);
+            textViewRMinTemp = itemView.findViewById(R.id.textViewRMinTemp);
+            textViewRHumidity = itemView.findViewById(R.id.textViewRHumidity);
+            textViewRClouds = itemView.findViewById(R.id.textViewRClouds);
         }
-    }
-    void getWeathers(String url){
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                e.printStackTrace();
-                Log.d(TAG, "onFailure: " + request.toString());
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: INSIDE RESPONSE");
-                if (response.isSuccessful()) {
-                    try {
-                        JSONObject weatherJsonObject = new JSONObject(response.body().string());
-                        JSONArray forcast = weatherJsonObject.getJSONArray("list");
-                        Log.d(TAG, "onResponse: JSON FORCAST");
-                        for(int i = 0;i<forcast.length();i++){
-                            JSONObject weekforecast = forcast.getJSONObject(i);
-                            Weather weather = new Weather();
-
-                            JSONObject main = weekforecast.getJSONObject("main");
-                            weather.setTemprature(main.getString("temp"));
-                            weather.setTempratureMax(main.getString("temp_max"));
-                            weather.setTempratureMin(main.getString("temp_min"));
-                            weather.setHumidity(main.getString("humidity"));
-
-                            JSONArray weatherArray = weekforecast.getJSONArray("weather");
-                            JSONObject weatherDescription = weatherArray.getJSONObject(0);
-                            weather.setDescription(weatherDescription.getString("description"));
-                            weather.setIcon(weatherDescription.getString("icon"));
-
-                            JSONObject wind = weekforecast.getJSONObject("wind");
-                            weather.setWindSpeed(wind.getString("speed"));
-                            weather.setWindDegree(wind.getString("deg"));
-
-                            JSONObject clouds = weekforecast.getJSONObject("clouds");
-                            weather.setCloudiness(clouds.getString("all"));
-
-                            weathers.add(weather);
-                        }
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                textViewTemprature.setText(weather.temprature + "F");
-//                                textViewTempratureMax.setText(weather.tempratureMax + "F");
-//                                textViewTempratureMin.setText(weather.tempratureMin + "F");
-//                                textViewDescription.setText(weather.description);
-//                                textViewHumidity.setText(weather.humidity + "%");
-//                                textViewWindSpeed.setText(weather.windSpeed + " miles/hr ");
-//                                textViewWindDegree.setText(weather.windDegree + " degrees ");
-//                                textViewCloudiness.setText(weather.cloudiness + "%");
-//
-//
-//                                String imgUrl = "https://openweathermap.org/img/wn/" + weather.icon +"@2x.png";
-//                                Log.d(TAG, "onCreateView: " + imgUrl);
-//                                Picasso.get().load(imgUrl).into(imageViewweather);
-//                            }
-//                        });
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                Log.d(TAG, "out array: "+ weathers);
-            }
-        });
     }
 }

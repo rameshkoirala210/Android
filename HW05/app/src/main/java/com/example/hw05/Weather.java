@@ -3,7 +3,15 @@ package com.example.hw05;
 import android.widget.TextView;
 
 public class Weather {
-    String temprature,tempratureMax,tempratureMin,description,humidity,windSpeed, windDegree, cloudiness, icon;
+    String temprature,tempratureMax,tempratureMin,description,humidity,windSpeed, windDegree, cloudiness, icon, date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getIcon() {
         return icon;
@@ -89,6 +97,7 @@ public class Weather {
                 ", windDegree='" + windDegree + '\'' +
                 ", cloudiness='" + cloudiness + '\'' +
                 ", icon='" + icon + '\'' +
+                ", Date='" + date + '\'' +
                 '}';
     }
 }

@@ -3,7 +3,11 @@ package com.example.hw05;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-
+/*
+    Assignment # Homework-05
+    File Name  Main Activity
+    Full name of the student - Ramesh Koirala, Anirudh Shankar
+*/
 public class MainActivity extends AppCompatActivity implements CitiesListFragment.CitiesListListener,CurrentWeatherFragment.CurrentWeatherListener {
 
     @Override
