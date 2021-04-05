@@ -224,8 +224,8 @@ public class ForumFragment extends Fragment {
 
             public CommentHolder(@NonNull View itemView) {
                 super(itemView);
-                textViewDesc = itemView.findViewById(R.id.textViewDesc);
-                textViewOwner = itemView.findViewById(R.id.textViewOwner);
+                textViewDesc = itemView.findViewById(R.id.textViewDescription);
+                textViewOwner = itemView.findViewById(R.id.textViewAuthor);
                 textViewDate = itemView.findViewById(R.id.textViewDate);
                 imageViewDeleteComment = itemView.findViewById(R.id.imageViewDeleteComment);
             }

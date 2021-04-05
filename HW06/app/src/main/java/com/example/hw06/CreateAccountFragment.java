@@ -7,110 +7,87 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class CreateAccountFragment extends Fragment {
+    EditText registerName, registerEmail,registerpassword;
+    private FirebaseAuth mAuth;
+    private final String TAG = "newAccounttag" ;
+
     public CreateAccountFragment() {
         // Required empty public constructor
     }
-    RegisterListener mListener;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    EditText editTextEmailAddress, editTextPassword, editTextName;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_account, container, false);
 
-        getActivity().setTitle("Create Account");
+        registerName = view.findViewById(R.id.RegisterName);
+        registerEmail = view.findViewById(R.id.RegisterEmail);
+        registerpassword = view.findViewById(R.id.registerpassword);
+        mAuth = FirebaseAuth.getInstance();
 
-        editTextEmailAddress = view.findViewById(R.id.editTextForumDesc);
-        editTextPassword = view.findViewById(R.id.editTextPassword);
-        editTextName = view.findViewById(R.id.editTextForumTitle);
-
-        view.findViewById(R.id.buttonCreateAccountSubmit).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.buttonSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String name = editTextName.getText().toString();
-                String email = editTextEmailAddress.getText().toString();
-                String password = editTextPassword.getText().toString();
+            public void onClick(View v) {
+                String name = registerName.getText().toString();
+                String email = registerEmail.getText().toString();
+                String password = registerpassword.getText().toString();
 
-                if(name.isEmpty()){
-                    Toast.makeText(getActivity(), "Name is required", Toast.LENGTH_SHORT).show();
-                } else if(email.isEmpty()){
-                    Toast.makeText(getActivity(), "Email is required", Toast.LENGTH_SHORT).show();
-                } else if(password.isEmpty()){
-                    Toast.makeText(getActivity(), "Password is required", Toast.LENGTH_SHORT).show();
-                } else {
-                    new CreateAccountTask().execute(name, email, password);
+                if(email.isEmpty() || password.isEmpty() || name.isEmpty()){
+                    Toast.makeText(getActivity(), "Its Empty", Toast.LENGTH_SHORT).show();
+                }else {
+                    mAuth.createUserWithEmailAndPassword(email,password)
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()){
+                                        Log.d(TAG, "onComplete: Successful");
+
+                                        Log.d(TAG, "onComplete: " + mAuth.getCurrentUser().getUid());
+                                        mListener.gotoFourmsFragmentfromRegister(registerName.getText().toString());
+
+                                    }else{
+                                        Log.d(TAG, "onComplete: error");
+                                        Log.d(TAG, "onComplete: " + task.getException().getMessage());
+                                    }
+
+                                }
+                            });
                 }
+
             }
         });
-
-        view.findViewById(R.id.buttonCancel).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.buttonCancle).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                mListener.gotoLogin();
+            public void onClick(View v) {
+                mListener.gotoLoginFragment();
             }
         });
 
         return view;
     }
-
-    class CreateAccountTask extends AsyncTask<String, String, DataServices.AuthResponse> {
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-            Toast.makeText(getActivity(), values[0], Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected DataServices.AuthResponse doInBackground(String... strings) {
-            String name = strings[0];
-            String email = strings[1];
-            String password = strings[2];
-            try {
-                return DataServices.register(name, email, password);
-            } catch (DataServices.RequestException e) {
-                e.printStackTrace();
-                publishProgress(e.getMessage());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(DataServices.AuthResponse authResponse) {
-            super.onPostExecute(authResponse);
-            if(authResponse != null){
-                mListener.gotoForumsList(authResponse);
-            }
-        }
-    }
-
+    CreateAccountFragment.NewAccountListener mListener;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        try {
-            mListener = (RegisterListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement RegisterListener");
-        }
+        mListener = (NewAccountListener) (context);
     }
 
-    interface RegisterListener{
-        void gotoForumsList(DataServices.AuthResponse authResponse);
-        void gotoLogin();
+    interface NewAccountListener{
+        void gotoFourmsFragmentfromRegister(String name);
+        void gotoLoginFragment();
     }
 }

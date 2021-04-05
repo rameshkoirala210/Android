@@ -1,113 +1,86 @@
 package com.example.hw06;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class LoginFragment extends Fragment {
+    private FirebaseAuth mAuth;
+    EditText loginEmail, loginPassword;
+
+    private final String TAG = "logintag" ;
     public LoginFragment() {
         // Required empty public constructor
     }
-    LoginListener mListener;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    EditText editTextEmailAddress, editTextPassword;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        editTextEmailAddress = view.findViewById(R.id.editTextForumDesc);
-        editTextPassword = view.findViewById(R.id.editTextPassword);
+        loginEmail = view.findViewById(R.id.LoginEmail);
+        loginPassword = view.findViewById(R.id.LoginPassword);
 
-        editTextEmailAddress.setText("a@a.com");
-        editTextPassword.setText("test123");
-        getActivity().setTitle("Login");
-
-        view.findViewById(R.id.buttonLoginSubmit).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.buttonLogin).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String email = editTextEmailAddress.getText().toString();
-                String password = editTextPassword.getText().toString();
+            public void onClick(View v) {
+                mAuth = FirebaseAuth.getInstance();
 
-                if(email.isEmpty()){
-                    Toast.makeText(getActivity(), "Email is required", Toast.LENGTH_SHORT).show();
-                } else if(password.isEmpty()){
-                    Toast.makeText(getActivity(), "Password is required", Toast.LENGTH_SHORT).show();
-                } else {
-                    //initiate the asyctask.
-                    new DoLoginTask().execute(email, password);
+                String email = loginEmail.getText().toString();
+                String password = loginPassword.getText().toString();
+
+                if(email.isEmpty() || password.isEmpty()){
+                    Toast.makeText(getActivity(), "Its Empty", Toast.LENGTH_SHORT).show();
+                }else {
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()){
+                                        mListener.gotoFourmsFragmentfromLogin();
+
+                                    }else{
+                                        Log.d(TAG, "onComplete: error");
+                                        Log.d(TAG, "onComplete: " + task.getException().getMessage());
+                                    }
+
+                                }
+                            });
                 }
             }
         });
-
-        view.findViewById(R.id.buttonCreateAccount).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.buttonNewAccount).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                mListener.gotoCreateAccount();
+            public void onClick(View v) {
+                mListener.gotoNewAccountFragment();
             }
         });
-
         return view;
     }
-
-    class DoLoginTask extends AsyncTask<String, String, DataServices.AuthResponse>{
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-            Toast.makeText(getActivity(), values[0], Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        protected DataServices.AuthResponse doInBackground(String... strings) {
-            String email = strings[0];
-            String password = strings[1];
-            try {
-                return DataServices.login(email, password);
-            } catch (DataServices.RequestException e) {
-                e.printStackTrace();
-                publishProgress(e.getMessage());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(DataServices.AuthResponse authResponse) {
-            super.onPostExecute(authResponse);
-            if(authResponse != null){
-                mListener.gotoForumsList(authResponse);
-            }
-        }
-    }
+    LoginFragment.LoginListener mListener;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        try {
-            mListener = (LoginListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement LoginListener");
-        }
+        mListener = (LoginListener) (context);
     }
 
     interface LoginListener{
-        void gotoForumsList(DataServices.AuthResponse authResponse);
-        void gotoCreateAccount();
+        void gotoFourmsFragmentfromLogin();
+        void gotoNewAccountFragment();
     }
 }

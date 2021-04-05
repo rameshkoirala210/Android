@@ -11,41 +11,39 @@
         android:id="@+id/textViewTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewDesc"
+        android:id="@+id/textViewDescription"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="38dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOwner" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAuthor" />
 
     <TextView
-        android:id="@+id/textViewOwner"
+        android:id="@+id/textViewAuthor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
     <TextView
-        android:id="@+id/textViewLikesAndDate"
-        android:layout_width="287dp"
-        android:layout_height="24dp"
+        android:id="@+id/textViewDateTime"
+        android:layout_width="222dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDesc" />
+        app:layout_constraintStart_toEndOf="@+id/textViewLike"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
     <ImageView
         android:id="@+id/imageViewLike"
@@ -53,15 +51,23 @@
         android:layout_height="20dp"
         android:src="@drawable/like_favorite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewLikesAndDate" />
+        app:layout_constraintTop_toTopOf="@+id/textViewDateTime" />
 
     <ImageView
-        android:id="@+id/imageViewDeleteForum"
+        android:id="@+id/imageViewtrash"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/rubbish_bin"
         app:layout_constraintEnd_toStartOf="@+id/imageViewLike"
-        app:layout_constraintTop_toTopOf="@+id/textViewLikesAndDate" />
+        app:layout_constraintTop_toTopOf="@+id/textViewDateTime" />
+
+    <TextView
+        android:id="@+id/textViewLike"
+        android:layout_width="50dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
