@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class CreateAccountFragment extends Fragment {
     EditText registerName, registerEmail,registerpassword;
@@ -31,6 +32,7 @@ public class CreateAccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle("Register");
         View view = inflater.inflate(R.layout.fragment_create_account, container, false);
 
         registerName = view.findViewById(R.id.RegisterName);
@@ -56,8 +58,9 @@ public class CreateAccountFragment extends Fragment {
                                         Log.d(TAG, "onComplete: Successful");
 
                                         Log.d(TAG, "onComplete: " + mAuth.getCurrentUser().getUid());
-                                        mListener.gotoFourmsFragmentfromRegister(registerName.getText().toString());
-
+                                        UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+                                        mAuth.getCurrentUser().updateProfile(profile);
+                                        mListener.gotoFourmsFragmentfromRegister();
                                     }else{
                                         Log.d(TAG, "onComplete: error");
                                         Log.d(TAG, "onComplete: " + task.getException().getMessage());
@@ -87,7 +90,7 @@ public class CreateAccountFragment extends Fragment {
     }
 
     interface NewAccountListener{
-        void gotoFourmsFragmentfromRegister(String name);
+        void gotoFourmsFragmentfromRegister();
         void gotoLoginFragment();
     }
 }

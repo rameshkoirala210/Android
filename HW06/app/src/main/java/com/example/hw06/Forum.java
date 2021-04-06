@@ -3,29 +3,57 @@ package com.example.hw06;
 
 import com.google.firebase.Timestamp;
 
-public class Forum {
-    String createdbyName, description, title;
-    Timestamp datetime;
+import java.util.ArrayList;
 
-    public Forum(String createdbyName, String description, String title, Timestamp datetime) {
+public class Forum {
+    String UUID, createdbyName;
+    Timestamp datetime;
+    String description;
+    String documentID;
+    ArrayList<String> likedBy;
+    String title;
+
+    public Forum(String UUID, String createdbyName, Timestamp datetime, String description, String documentID, ArrayList<String> likedBy, String title) {
+        this.UUID = UUID;
         this.createdbyName = createdbyName;
-        this.description = description;
-        this.title = title;
         this.datetime = datetime;
+        this.description = description;
+        this.documentID = documentID;
+        this.likedBy = likedBy;
+        this.title = title;
     }
 
-    public Forum(){
+    public ArrayList<String> getLikedBy() {
+        return likedBy;
+    }
 
+    public void setLikedBy(ArrayList<String> likedBy) {
+        this.likedBy = likedBy;
+    }
+
+    public String getDocumentID() {
+        return documentID;
+    }
+
+    public void setDocumentID(String documentID) {
+        this.documentID = documentID;
     }
 
     @Override
     public String toString() {
         return "Forum{" +
-                "createdbyName='" + createdbyName + '\'' +
+                "UUID='" + UUID + '\'' +
+                ", createdbyName='" + createdbyName + '\'' +
+                ", datetime=" + datetime +
                 ", description='" + description + '\'' +
+                ", documentID='" + documentID + '\'' +
                 ", title='" + title + '\'' +
-                ", daetime=" + datetime +
+                ", likedBy=" + likedBy +
                 '}';
+    }
+
+    public Forum(){
+
     }
 
     public String getCreatedbyName() {
@@ -58,5 +86,13 @@ public class Forum {
 
     public void setDatetime(Timestamp datetime) {
         this.datetime = datetime;
+    }
+
+    public String getUUID() {
+        return UUID;
+    }
+
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 }

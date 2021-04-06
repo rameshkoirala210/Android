@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity implements LoginFragment.LoginListener, CreateAccountFragment.NewAccountListener, ForumListFragment.FourmsListener {
+public class MainActivity extends AppCompatActivity implements LoginFragment.LoginListener, CreateAccountFragment.NewAccountListener, ForumListFragment.FourmsListener, NewForumFragment.NewForumFragmentListener {
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +31,8 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     }
 
     @Override
-    public void gotoFourmsFragmentfromRegister(String name) {
+    public void gotoFourmsFragmentfromRegister() {
         ForumListFragment fragment = new ForumListFragment();
-        fragment.setname(name);
         getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).commit();
     }
 
@@ -43,14 +42,18 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     }
 
     @Override
-    public void gotoNewForumFragment(String name) {
+    public void gotoNewForumFragment() {
         NewForumFragment fragment = new NewForumFragment();
-        fragment.setname(name);
         getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).addToBackStack(null).commit();
     }
 
     @Override
     public void gotoLoginFragmentafterLogout() {
         getSupportFragmentManager().beginTransaction().replace(R.id.layout, new LoginFragment()).commit();
+    }
+
+    @Override
+    public void doneCreateForum() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, new ForumListFragment()).commit();
     }
 }

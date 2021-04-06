@@ -18,7 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -27,11 +32,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class ForumListFragment extends Fragment {
     private FirebaseAuth mAuth;
-    String name;
-    private final String TAG = "Forumstag" ;
+    private final String TAG = "Forumstag";
+    private final String forumName = "forums";
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     RecyclerView recyclerView;
     FourmAdapter adapter;
@@ -44,6 +54,7 @@ public class ForumListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Forums");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_forums_list, container, false);
 
@@ -54,14 +65,13 @@ public class ForumListFragment extends Fragment {
             public void onClick(View v) {
                 mAuth.signOut();
                 mListener.gotoLoginFragmentafterLogout();
-
             }
         });
 
         view.findViewById(R.id.buttonNewForum).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.gotoNewForumFragment(name);
+                mListener.gotoNewForumFragment();
             }
         });
 
@@ -71,14 +81,14 @@ public class ForumListFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setHasFixedSize(true);
         //recyclerView.setAdapter(adapter);
-
         getFourms();
         return view;
     }
+
+
     private void getFourms(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("datasetforForums").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
+        db.collection(forumName).addSnapshotListener(new EventListener<QuerySnapshot>() {
+           @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (error == null){
                     fourmsList.clear();
@@ -86,8 +96,8 @@ public class ForumListFragment extends Fragment {
                         Forum forum = queryDocumentSnapshot.toObject(Forum.class);
                         fourmsList.add(forum);
                     }
+                    //Log.d(TAG, "onEvent: " + fourmsList.toString());
                     recyclerView.setAdapter(adapter);
-
                 }
             }
         });
@@ -102,12 +112,8 @@ public class ForumListFragment extends Fragment {
         mListener = (ForumListFragment.FourmsListener) (context);
     }
 
-    public void setname(String name) {
-        this.name = name;
-    }
-
     interface FourmsListener{
-        void gotoNewForumFragment(String name);
+        void gotoNewForumFragment();
         void gotoLoginFragmentafterLogout();
     }
 
@@ -150,54 +156,63 @@ public class ForumListFragment extends Fragment {
             public void setupForumItem(Forum forum) {
                 this.forum = forum;
                 textViewTitle.setText(forum.getTitle());
-
                 String desc200 = forum.getDescription().substring(0, Math.min(200, forum.getDescription().length()));
-
                 textViewDescription.setText(desc200);
                 textViewAuthor.setText(forum.getCreatedbyName());
+                textViewLike.setText(forum.getLikedBy().size() + " Likes");
+                textViewDateTime.setText(forum.datetime.toDate().toString());
 
-                //TODO create like count in the database and use that to show numLikes to the users
-//                int likeCount = forum..size();
-//                String likeString = "No Likes";
-//                if(likeCount == 1){
-//                    likeString = "1 Like";
-//                } else {
-//                    likeString = likeCount + " Likes";
-//                }
 
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy h:m a");
-                textViewDateTime.setText(formatter.format(forum.datetime));
-
-                //@TODO create UUID for forum creator and compare them here
-                if(forum.getCreatedbyName() == mAuth.getCurrentUser().getDisplayName()){
+                if(forum.getUUID().equals(mAuth.getCurrentUser().getUid())){
                     imageViewtrash.setVisibility(View.VISIBLE);
                     imageViewtrash.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            //new DeleteForumTask(mForum.getForumId(), mAuthResponse.getToken()).execute();
-                            //TODO create delete asynctask to delete the forum from the firebase database
-
+                            db.collection(forumName).document(forum.getDocumentID()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "onSuccess: " + forum + " successfully deleted");
+                                }
+                            });
                         }
                     });
                 } else {
                     imageViewtrash.setVisibility(View.INVISIBLE);
                 }
 
-                //TODO first appeareance. Check whether the user like it or not
-//                if(forum.getLikedBy().contains(mAuthResponse.getAccount())){
-//                    imageViewLike.setImageResource(R.drawable.like_favorite);
-//                } else {
-//                    imageViewLike.setImageResource(R.drawable.like_not_favorite);
-//                }
+                if(forum.getLikedBy().contains(mAuth.getCurrentUser().getUid())){
+                    imageViewLike.setImageResource(R.drawable.like_favorite);
+                } else {
+                    imageViewLike.setImageResource(R.drawable.like_not_favorite);
+                }
 
                 imageViewLike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //TODO change the like to dislike and vise versa
+                        //TODO push changes to firebase
+                        if(forum.getLikedBy().contains(mAuth.getCurrentUser().getUid())){
+                            forum.getLikedBy().remove(mAuth.getCurrentUser().getUid());
+                        } else {
+                            forum.getLikedBy().add(mAuth.getCurrentUser().getUid());
+                        }
+                        changeFirebaseData(forum);
+                        adapter.notifyDataSetChanged();
                     }
                 });
 
             }
         }
+    }
+
+    private void changeFirebaseData(Forum forum) {
+        HashMap<String, Object> likedByList = new HashMap<>();
+        likedByList.put("likedBy", forum.getLikedBy());
+        db.collection(forumName).document(forum.getDocumentID())
+                .update(likedByList).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                //Log.d(TAG, "LIKED BY SUCCESS");
+            }
+        });
     }
 }
