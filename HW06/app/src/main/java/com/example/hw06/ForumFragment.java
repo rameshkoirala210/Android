@@ -4,10 +4,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,49 +18,44 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.internal.$Gson$Preconditions;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ForumFragment extends Fragment {
-    private static final String ARG_PARAM_AUTH = "ARG_PARAM_AUTH";
-    private static final String ARG_PARAM_FORUM = "ARG_PARAM_FORUM";
-
-    private DataServices.Forum mForum;
-    private DataServices.AuthResponse mAuthResponse;
-
+    private static final String TAG = "TAG_Forum";
     public ForumFragment() {
     }
-
-    public static ForumFragment newInstance(DataServices.Forum forum, DataServices.AuthResponse authResponse) {
-        ForumFragment fragment = new ForumFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_PARAM_FORUM, forum);
-        args.putSerializable(ARG_PARAM_AUTH, authResponse);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mForum = (DataServices.Forum) getArguments().getSerializable(ARG_PARAM_FORUM);
-            mAuthResponse = (DataServices.AuthResponse) getArguments().getSerializable(ARG_PARAM_AUTH);
-        }
-    }
-
     TextView textViewForumTitle, textViewForumOwnerName, textViewForumDesc, textViewNumComments;
     EditText editTextTextComment;
     RecyclerView recyclerView;
     CommentsAdapter adapter;
     LinearLayoutManager mLayoutManager;
-    ArrayList<DataServices.Comment> comments = new ArrayList<>();
+    ArrayList<Comment> comments = new ArrayList<>();
+    Forum forum;
+    FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
+    public void sendForum(Forum forum) {
+        this.forum = forum;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         getActivity().setTitle("Forum Details");
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         View view = inflater.inflate(R.layout.fragment_forum, container, false);
 
@@ -67,14 +64,13 @@ public class ForumFragment extends Fragment {
         textViewForumDesc = view.findViewById(R.id.textViewForumDesc);
         textViewNumComments = view.findViewById(R.id.textViewNumComments);
 
+        //Populate the textviews
+        textViewForumTitle.setText(forum.getTitle());
+        textViewForumOwnerName.setText(forum.getCreatedbyName());
+        textViewForumDesc.setText(forum.getDescription());
+
         editTextTextComment = view.findViewById(R.id.editTextTextComment);
         recyclerView = view.findViewById(R.id.recyclerView);
-
-        textViewForumTitle.setText(mForum.getTitle());
-        textViewForumOwnerName.setText(mForum.getCreatedBy().getName());
-        textViewForumDesc.setText(mForum.getDescription());
-        textViewNumComments.setText("");
-
 
         view.findViewById(R.id.buttonPostSubmit).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +80,7 @@ public class ForumFragment extends Fragment {
                 if(commentText.isEmpty()){
                     Toast.makeText(getActivity(), "Enter comment text!", Toast.LENGTH_SHORT).show();
                 } else {
-                    new CreateNewCommentTask(mAuthResponse.getToken(), mForum.getForumId(), commentText).execute();
+                    postFirebaseComment(commentText);
                 }
             }
         });
@@ -94,108 +90,9 @@ public class ForumFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
-        new GetCommentsTask(mAuthResponse.getToken(), mForum.getForumId()).execute();
-
-
+        getFirebaseComments();
         return view;
     }
-
-
-    class GetCommentsTask extends AsyncTask<Void, String, ArrayList<DataServices.Comment>> {
-
-        String mToken;
-        long mForumId;
-
-        public GetCommentsTask(String token, long forumId){
-            this.mForumId = forumId;
-            this.mToken = token;
-        }
-
-        @Override
-        protected ArrayList<DataServices.Comment> doInBackground(Void... voids) {
-            try {
-                return DataServices.getForumComments(mToken, mForumId);
-            } catch (DataServices.RequestException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<DataServices.Comment> receivedCommentsList) {
-            super.onPostExecute(receivedCommentsList);
-            if(receivedCommentsList != null){
-                comments.clear();
-                comments.addAll(receivedCommentsList);
-                adapter.notifyDataSetChanged();
-
-                textViewNumComments.setText(comments.size() + " Comments");
-
-
-            }
-        }
-    }
-
-    class CreateNewCommentTask extends AsyncTask<Void, String, DataServices.Comment>{
-        String mToken;
-        long mForumId;
-        String mCommentText;
-
-        public CreateNewCommentTask(String token, long forumId, String commentText){
-            this.mForumId = forumId;
-            this.mToken = token;
-            this.mCommentText = commentText;
-        }
-
-        @Override
-        protected DataServices.Comment doInBackground(Void... voids) {
-
-            try {
-                return DataServices.createComment(mToken, mForumId, mCommentText);
-            } catch (DataServices.RequestException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(DataServices.Comment comment) {
-            super.onPostExecute(comment);
-            new GetCommentsTask(mToken, mForumId).execute();
-        }
-    }
-
-    class DeleteCommentTask extends AsyncTask<Void, String, Boolean>{
-        String mToken;
-        long mForumId, mCommentId;
-
-        public DeleteCommentTask(String token, long forumId, long commentId){
-            this.mForumId = forumId;
-            this.mToken = token;
-            this.mCommentId = commentId;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... voids) {
-            try {
-                DataServices.deleteComment(mToken, mForumId, mCommentId);
-                return true;
-            } catch (DataServices.RequestException e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean isSuccessful) {
-            super.onPostExecute(isSuccessful);
-            if(isSuccessful){
-                new GetCommentsTask(mToken, mForumId).execute();
-            }
-        }
-    }
-
 
     class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentHolder>{
         @NonNull
@@ -208,7 +105,8 @@ public class ForumFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull CommentHolder holder, int position) {
-            DataServices.Comment comment = comments.get(position);
+            //Log.d(TAG, "onBindViewHolder: " + comments.toString());
+            Comment comment = comments.get(position);
             holder.setupComment(comment);
         }
 
@@ -220,7 +118,6 @@ public class ForumFragment extends Fragment {
         class CommentHolder extends RecyclerView.ViewHolder{
             TextView textViewDesc, textViewOwner, textViewDate;
             ImageView imageViewDeleteComment;
-            long commentId;
 
             public CommentHolder(@NonNull View itemView) {
                 super(itemView);
@@ -230,28 +127,72 @@ public class ForumFragment extends Fragment {
                 imageViewDeleteComment = itemView.findViewById(R.id.imageViewDeleteComment);
             }
 
-            public void setupComment(DataServices.Comment comment){
-                textViewDesc.setText(comment.getText());
-                textViewOwner.setText(comment.getCreatedBy().getName());
+            public void setupComment(Comment comment){
+                textViewDesc.setText(comment.getDescription());
+                textViewOwner.setText(comment.getCreatedByName());
+                textViewDate.setText(comment.getDatetime().toDate().toString());
 
-                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy h:m a");
-                textViewDate.setText(formatter.format(comment.getCreatedAt()));
-
-                commentId = comment.getCommentId();
-
-                if(comment.getCreatedBy().uid == mAuthResponse.getAccount().uid){
+                if(comment.getCreatedByUUID().equals(mAuth.getCurrentUser().getUid())){
+                    Log.d(TAG,  comment.toString());
                     imageViewDeleteComment.setVisibility(View.VISIBLE);
                     imageViewDeleteComment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            new DeleteCommentTask(mAuthResponse.getToken(), mForum.getForumId(), commentId).execute();
+                            db.collection("Comments").document(comment.getCommentID())
+                                    .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "Comment Successfully Deleted");
+                                }
+                            });
                         }
                     });
                 } else {
+                    Log.d(TAG, "setupComment: ALWAYS ELSE");
                     imageViewDeleteComment.setVisibility(View.INVISIBLE);
                 }
             }
         }
+
     }
+
+    private void getFirebaseComments() {
+        db.collection("Comments").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error == null){
+                    comments.clear();
+                    for (QueryDocumentSnapshot queryDocumentSnapshot: value) {
+                        Comment comment = queryDocumentSnapshot.toObject(Comment.class);
+                        if (comment.getForumID().equals(forum.getDocumentID())) {
+                            comments.add(comment);
+                        }
+                    }
+                }
+                textViewNumComments.setText(comments.size() + " Comments");
+                recyclerView.setAdapter(adapter);
+            }
+        });
+    }
+
+    private void postFirebaseComment(String str) {
+        HashMap<String,Object> comment = new HashMap<>();
+        comment.put("createdByName", mAuth.getCurrentUser().getDisplayName());
+        comment.put("createdByUUID", mAuth.getCurrentUser().getUid());
+        comment.put("datetime", Timestamp.now());
+        comment.put("description", str);
+        comment.put("forumID",forum.getDocumentID());
+
+        db.collection("Comments").add(comment)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        comment.put("commentID", documentReference.getId());
+                        documentReference.update(comment);
+                        editTextTextComment.setText("");
+                    }
+                });
+    }
+
 
 }

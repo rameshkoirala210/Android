@@ -115,6 +115,7 @@ public class ForumListFragment extends Fragment {
     interface FourmsListener{
         void gotoNewForumFragment();
         void gotoLoginFragmentafterLogout();
+        void gotoForumFragment(Forum forum);
     }
 
     private class FourmAdapter extends RecyclerView.Adapter<FourmAdapter.FourmHolder> {
@@ -150,7 +151,12 @@ public class ForumListFragment extends Fragment {
                 imageViewtrash = itemView.findViewById(R.id.imageViewtrash);
                 textViewLike = itemView.findViewById(R.id.textViewLike);
                 imageViewLike = itemView.findViewById(R.id.imageViewLike);
-
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.gotoForumFragment(forum);
+                    }
+                });
             }
 
             public void setupForumItem(Forum forum) {

@@ -53,6 +53,13 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     }
 
     @Override
+    public void gotoForumFragment(Forum forum) {
+        ForumFragment fragment = new ForumFragment();
+        fragment.sendForum(forum);
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).addToBackStack(null).commit();
+    }
+
+    @Override
     public void doneCreateForum() {
         getSupportFragmentManager().beginTransaction().replace(R.id.layout, new ForumListFragment()).commit();
     }
