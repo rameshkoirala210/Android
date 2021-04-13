@@ -1,5 +1,6 @@
 package com.example.hw06;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -47,11 +48,18 @@ public class NewForumFragment extends Fragment {
         view.findViewById(R.id.buttonSubmitForum).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(editForumTitle.getText().toString().isEmpty() && editForumDescription.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(), "Its Empty", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                if(editForumTitle.getText().toString().isEmpty()) {
+                    builder.setTitle("Missing Fields").
+                            setMessage("Title is Empty")
+                            .setPositiveButton("OK", null)
+                            .show();
+                } else if(editForumDescription.getText().toString().isEmpty()) {
+                    builder.setTitle("Missing Fields").
+                            setMessage("Description is Empty")
+                            .setPositiveButton("OK", null)
+                            .show();
                 }else{
-                    Log.d(TAG, "onClick: xxdfasdf");
                     setData(editForumTitle.getText().toString(), editForumDescription.getText().toString());
                 }
             }
@@ -91,13 +99,11 @@ public class NewForumFragment extends Fragment {
         user.put("description", description);
         user.put("likedBy", new ArrayList<>());
         user.put("title",title);
-        Log.d(TAG, "setData: " + "TESTSTSTSEDT");
         db.collection("forums")
                 .add(user)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "onSuccess: xxxxx" );
                         user.put("documentID", documentReference.getId());
                         documentReference.update(user);
                         mListener.doneCreateForum();

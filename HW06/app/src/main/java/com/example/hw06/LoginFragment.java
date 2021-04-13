@@ -1,5 +1,6 @@
 package com.example.hw06;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -36,6 +37,7 @@ public class LoginFragment extends Fragment {
         loginEmail = view.findViewById(R.id.LoginEmail);
         loginPassword = view.findViewById(R.id.LoginPassword);
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         view.findViewById(R.id.buttonLogin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,23 +46,31 @@ public class LoginFragment extends Fragment {
                 String email = loginEmail.getText().toString();
                 String password = loginPassword.getText().toString();
 
-                if(email.isEmpty() || password.isEmpty()){
-                    Toast.makeText(getActivity(), "Its Empty", Toast.LENGTH_SHORT).show();
+                if(email.isEmpty()) {
+                    builder.setTitle("Missing Fields").
+                            setMessage("Email is Empty")
+                            .setPositiveButton("OK", null)
+                            .show();
+                }else if(password.isEmpty()){
+                    builder.setTitle("Missing Fields").
+                            setMessage("Password is Empty")
+                            .setPositiveButton("OK", null)
+                            .show();
                 }else {
-                    mAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if(task.isSuccessful()){
-                                        mListener.gotoFourmsFragmentfromLogin();
-
-                                    }else{
-                                        Log.d(TAG, "onComplete: error");
-                                        Log.d(TAG, "onComplete: " + task.getException().getMessage());
-                                    }
-
-                                }
-                            });
+                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                mListener.gotoFourmsFragmentfromLogin();
+                            }else{
+                                builder.setTitle("Not Successful")
+                                        .setMessage(task.getException().getMessage())
+                                        .setPositiveButton("OK", null)
+                                        .show();
+                                        //Log.d(TAG, "onComplete: " + task.getException().getMessage());
+                            }
+                        }
+                    });
                 }
             }
         });

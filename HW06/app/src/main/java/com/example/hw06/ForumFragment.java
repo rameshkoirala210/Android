@@ -1,5 +1,6 @@
 package com.example.hw06;
 
+import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -76,9 +77,12 @@ public class ForumFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String commentText = editTextTextComment.getText().toString();
-
-                if(commentText.isEmpty()){
-                    Toast.makeText(getActivity(), "Enter comment text!", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                if(commentText.isEmpty()) {
+                    builder.setTitle("Missing Fields")
+                            .setMessage("Comment is Empty")
+                            .setPositiveButton("OK", null)
+                            .show();
                 } else {
                     postFirebaseComment(commentText);
                 }

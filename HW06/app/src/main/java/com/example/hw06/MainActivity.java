@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
 
     @Override
     public void gotoNewAccountFragment() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout, new CreateAccountFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, new CreateAccountFragment()).addToBackStack(null).commit();
     }
 
     @Override
@@ -61,6 +61,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
 
     @Override
     public void doneCreateForum() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.layout, new ForumListFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, new ForumListFragment()).addToBackStack(null).commit();
     }
 }

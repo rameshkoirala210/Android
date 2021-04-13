@@ -1,5 +1,6 @@
 package com.example.hw06;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -47,9 +48,24 @@ public class CreateAccountFragment extends Fragment {
                 String email = registerEmail.getText().toString();
                 String password = registerpassword.getText().toString();
 
-                if(email.isEmpty() || password.isEmpty() || name.isEmpty()){
-                    Toast.makeText(getActivity(), "Its Empty", Toast.LENGTH_SHORT).show();
-                }else {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                if(name.isEmpty()) {
+                    builder.setTitle("Missing Fields").
+                            setMessage("Name is Empty")
+                            .setPositiveButton("OK", null)
+                            .show();
+                }else if(email.isEmpty()){
+                    builder.setTitle("Missing Fields").
+                            setMessage("Email is Empty")
+                            .setPositiveButton("OK", null)
+                            .show();
+                }else if(password.isEmpty()){
+                    builder.setTitle("Missing Fields").
+                            setMessage("Password is Empty")
+                            .setPositiveButton("OK", null)
+                            .show();
+                } else {
                     mAuth.createUserWithEmailAndPassword(email,password)
                             .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -62,8 +78,11 @@ public class CreateAccountFragment extends Fragment {
                                         mAuth.getCurrentUser().updateProfile(profile);
                                         mListener.gotoFourmsFragmentfromRegister();
                                     }else{
-                                        Log.d(TAG, "onComplete: error");
-                                        Log.d(TAG, "onComplete: " + task.getException().getMessage());
+                                        builder.setTitle("Not Successful")
+                                                .setMessage(task.getException().getMessage())
+                                                .setPositiveButton("OK", null)
+                                                .show();
+                                        //Log.d(TAG, "onComplete: " + task.getException().getMessage());
                                     }
 
                                 }
