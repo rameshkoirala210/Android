@@ -2,6 +2,8 @@ package com.example.hw07;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -29,11 +31,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -202,29 +207,19 @@ public class ProfileFragment extends Fragment {
 
             public void setupProfile(int position) {
                 String str = profile.getImages().get(position);
-                Log.d(TAG, "setupProfile: " + storageReference.toString());
                 Log.d(TAG, "setupProfile: " + str);
-                StorageReference imgRef = storageReference.child(str);
+                StorageReference imgRef = storageReference.child("images")
+                        .child("w4j2x1A7kWYXT4dwu8kfgo9259x1")
+                        .child("6f8300fd-f1c9-45a8-ad25-394e56d51de9");
+                imgRef.getBytes(1024*1024)
+                        .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                imagePicture.setImageBitmap(bitmap);
+                            }
+                        });
                 Log.d(TAG, "setupProfile: " + imgRef.toString());
-                Glide.with(getContext())
-                        .load(imgRef)
-                        .into(imagePicture);
-                storageReference.child(str).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        // Got the download URL for 'users/me/profile.png'
-                        Log.d(TAG, "onSuccess: " + uri.toString());
-                        Glide.with(getContext())
-                                .load(uri)
-                                .into(imagePicture);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle any errors
-                        Log.d(TAG, "failed");
-                    }
-                });
             }
         }
     }
