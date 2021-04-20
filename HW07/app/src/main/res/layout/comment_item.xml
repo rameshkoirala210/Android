@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/textViewDescription"
-        android:layout_width="381dp"
-        android:layout_height="44dp"
+        android:layout_width="306dp"
+        android:layout_height="38dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="3dp"
@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/textViewAuthor"
-        android:layout_width="378dp"
+        android:layout_width="315dp"
         android:layout_height="26dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -44,8 +44,8 @@
         android:id="@+id/imageViewDeleteComment"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginLeft="59dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
         android:layout_marginTop="12dp"
         android:src="@drawable/rubbish_bin"
         app:layout_constraintStart_toEndOf="@+id/textViewDate"

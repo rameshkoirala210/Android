@@ -47,6 +47,13 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.Log
     }
 
     @Override
+    public void gotoCommentsFragmentFromProfileFragment(Image image) {
+        CommentsFragment fragment = new CommentsFragment();
+        fragment.setImage(image);
+        getSupportFragmentManager().beginTransaction().replace(R.id.layout, fragment).addToBackStack(null).commit();
+    }
+
+    @Override
     public void gotoProfileFragment(Profile profile) {
         ProfileFragment fragment = new ProfileFragment();
         fragment.setProfile(profile);

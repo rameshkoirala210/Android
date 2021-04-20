@@ -9,16 +9,17 @@
 
     <ListView
         android:id="@+id/profileListView"
-        android:layout_width="401dp"
-        android:layout_height="589dp"
+        android:layout_width="349dp"
+        android:layout_height="519dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonLogoutProfileList"
-        android:layout_width="395dp"
-        android:layout_height="57dp"
+        android:layout_width="342dp"
+        android:layout_height="49dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"

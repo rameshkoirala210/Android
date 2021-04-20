@@ -3,17 +3,21 @@ package com.example.hw07;
 import java.util.ArrayList;
 
 public class Image {
-    String documentID;
-    ArrayList<String> likedBy;
-    String referenceLocation;
+    private ArrayList<String> comments;
+    private String documentID;
+    private ArrayList<String> likedBy;
+    private String postedUUID;
+    private String storageRef;
 
     public Image() {
     }
 
-    public Image(String documentID, ArrayList<String> likedBy, String refLocation) {
+    public Image(String documentID, ArrayList<String> likedBy, String storageRef, ArrayList<String> comments, String postedUUID) {
         this.documentID = documentID;
         this.likedBy = likedBy;
-        this.referenceLocation = refLocation;
+        this.storageRef = storageRef;
+        this.comments = comments;
+        this.postedUUID = postedUUID;
     }
 
     public String getDocumentID() {
@@ -32,12 +36,28 @@ public class Image {
         this.likedBy = likedBy;
     }
 
-    public String getReferenceLocation() {
-        return referenceLocation;
+    public String getStorageRef() {
+        return storageRef;
     }
 
-    public void setReferenceLocation(String refLocation) {
-        this.referenceLocation = refLocation;
+    public void setStorageRef(String storageRef) {
+        this.storageRef = storageRef;
+    }
+
+    public ArrayList<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(ArrayList<String> comments) {
+        this.comments = comments;
+    }
+
+    public String getPostedUUID() {
+        return postedUUID;
+    }
+
+    public void setPostedUUID(String postedUUID) {
+        this.postedUUID = postedUUID;
     }
 
     @Override
@@ -45,7 +65,9 @@ public class Image {
         return "Image{" +
                 "documentID='" + documentID + '\'' +
                 ", likedBy=" + likedBy +
-                ", refLocation='" + referenceLocation + '\'' +
+                ", storageRef='" + storageRef + '\'' +
+                ", comments=" + comments +
+                ", postedUUID='" + postedUUID + '\'' +
                 '}';
     }
 }

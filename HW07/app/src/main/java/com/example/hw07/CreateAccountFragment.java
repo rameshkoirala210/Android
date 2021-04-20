@@ -82,7 +82,7 @@ public class CreateAccountFragment extends Fragment {
                                         Log.d(TAG, "onComplete: " + mAuth.getCurrentUser().getUid());
                                         UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
                                         mAuth.getCurrentUser().updateProfile(profile);
-                                        Profile profile1 = new Profile(mAuth.getUid(), "", name, email, new ArrayList<>());
+                                        Profile profile1 = new Profile(mAuth.getUid(), "", name, email);
                                         addProfileToFirebase(profile1);
                                         mListener.gotoProfileFragmentfromRegister();
                                     }else{
@@ -127,7 +127,6 @@ public class CreateAccountFragment extends Fragment {
         profileList.put("UUID", profile.getUUID());
         profileList.put("name", profile.getName());
         profileList.put("email",profile.getEmail());
-        profileList.put("images", profile.getImages());
         db.collection("Profile").add(profileList).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
             public void onSuccess(DocumentReference documentReference) {

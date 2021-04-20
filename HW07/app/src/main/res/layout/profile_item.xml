@@ -29,11 +29,13 @@
 
     <TextView
         android:id="@+id/textViewLike"
-        android:layout_width="99dp"
-        android:layout_height="33dp"
+        android:layout_width="104dp"
+        android:layout_height="41dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 

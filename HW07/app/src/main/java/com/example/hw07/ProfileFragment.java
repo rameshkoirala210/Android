@@ -30,7 +30,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -54,6 +59,7 @@ public class ProfileFragment extends Fragment {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageReference = storage.getReference();
     public Uri imageUri;
+    private ArrayList<Image> images = new ArrayList<>();
 
     RecyclerView recyclerView;
     LinearLayoutManager mLayoutManager;
@@ -72,6 +78,7 @@ public class ProfileFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         getActivity().setTitle("Profile Fragment");
         mAuth = FirebaseAuth.getInstance();
+        getImages();
         buttonNewPost = view.findViewById(R.id.buttonNewPost);
         buttonNewPost.setVisibility(View.INVISIBLE);
 
@@ -101,8 +108,26 @@ public class ProfileFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    private void getImages() {
+
+        db.collection("Image").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error == null){
+                    images.clear();
+                    for(QueryDocumentSnapshot queryDocumentSnapshot: value) {
+                        Image image = queryDocumentSnapshot.toObject(Image.class);
+                        if (image.getPostedUUID().equals(profile.getUUID()))
+                            images.add(image);
+                    }
+                    Log.d(TAG, "onEvent: " + images.toString());
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+        });
     }
 
     @Override
@@ -120,8 +145,8 @@ public class ProfileFragment extends Fragment {
 
         StorageReference mountainsRef = storageReference.child("mountains.jpg");
         String ref = "/" + UUID.randomUUID().toString();
-        // Create a reference to 'images/mountains.jpg'
-        StorageReference mountainImagesRef = storageReference.child("images/" + profile.getUUID() + ref);
+        String imageLocation = "images/" + profile.getUUID() + ref;
+        StorageReference mountainImagesRef = storageReference.child(imageLocation);
 
         // While the file names are the same, the references point to different files
         mountainsRef.getName().equals(mountainImagesRef.getName());    // true
@@ -132,21 +157,29 @@ public class ProfileFragment extends Fragment {
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 //String downloadURL = task.getResult().getStorage().getDownloadUrl().toString();
                // Image image = new Image("",new ArrayList<>(), "images/" + profile.getUUID() + ref);
-                profile.getImages().add(mountainImagesRef.toString());
-                changeFirebaseProfile(profile);
-                adapter.notifyDataSetChanged();
+                addFirebaseImage(imageLocation);
+
             }
         });
     }
 
-    private void changeFirebaseProfile(Profile profile) {
+    private void addFirebaseImage(String imageLocation) {
         HashMap<String, Object> updateImageRefs = new HashMap<>();
-        updateImageRefs.put("images", profile.getImages());
-        db.collection("Profile").document(profile.getDocumentID())
-                .update(updateImageRefs).addOnSuccessListener(new OnSuccessListener<Void>() {
+        updateImageRefs.put("comments", new ArrayList<>());
+        updateImageRefs.put("likedBy", new ArrayList<>());
+        updateImageRefs.put("postedUUID", mAuth.getCurrentUser().getUid());
+        updateImageRefs.put("storageRef", imageLocation);
+        db.collection("Image").add(updateImageRefs).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "onSuccess: SUCCDFSDFSDFSDFSDFSDFSDFSDFSDFSDFSDF");
+            public void onSuccess(DocumentReference documentReference) {
+                updateImageRefs.put("documentID", documentReference.getId());
+                Log.d(TAG, "onSuccess: asdfasdfasdfasdfasd");
+                db.collection("Image").document(documentReference.getId()).update(updateImageRefs);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: asdfasdfasdfasdf");
             }
         });
     }
@@ -165,7 +198,7 @@ public class ProfileFragment extends Fragment {
 
     interface ProfileListener{
         void gotoLoginFragmentafterLogout();
-
+        void gotoCommentsFragmentFromProfileFragment(Image image);
     }
 
     private class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileHolder>{
@@ -179,17 +212,19 @@ public class ProfileFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull ProfileHolder holder, int position) {
+            holder.position = position;
             holder.setupProfile(position);
         }
 
         @Override
         public int getItemCount() {
-            return profile.getImages().size();
+            return images.size();
         }
 
         public class ProfileHolder extends RecyclerView.ViewHolder {
             ImageView imagePicture, imageTrash, imageLike;
             TextView textViewamountLikes;
+            int position;
 
             public ProfileHolder(@NonNull View itemView) {
                 super(itemView);
@@ -201,16 +236,50 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         //TODO when item is clicked. Go to Comments Fragment
+                        mListener.gotoCommentsFragmentFromProfileFragment(images.get(position));
                     }
                 });
             }
 
             public void setupProfile(int position) {
-                String str = profile.getImages().get(position);
-                Log.d(TAG, "setupProfile: " + str);
-                StorageReference imgRef = storageReference.child("images")
-                        .child("w4j2x1A7kWYXT4dwu8kfgo9259x1")
-                        .child("6f8300fd-f1c9-45a8-ad25-394e56d51de9");
+                Image image = images.get(position);
+
+                //setting delete button
+                if (image.getPostedUUID().equals(mAuth.getCurrentUser().getUid())){
+                    imageTrash.setVisibility(View.VISIBLE);
+                    imageTrash.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //TODO Delete
+                            deleteImage(image);
+                        }
+                    });
+                } else {
+                    imageTrash.setVisibility(View.INVISIBLE);
+                }
+
+                textViewamountLikes.setText(image.getLikedBy().size() + " likes");
+
+                if(image.getLikedBy().contains(mAuth.getCurrentUser().getUid())){
+                    imageLike.setImageResource(R.drawable.like_favorite);
+                } else {
+                    imageLike.setImageResource(R.drawable.like_not_favorite);
+                }
+
+                imageLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(image.getLikedBy().contains(mAuth.getCurrentUser().getUid())){
+                            image.getLikedBy().remove(mAuth.getCurrentUser().getUid());
+                        } else {
+                            image.getLikedBy().add(mAuth.getCurrentUser().getUid());
+                        }
+                        changeFirebaseData(image);
+                        //adapter.notifyDataSetChanged();
+                    }
+                });
+
+                StorageReference imgRef = storageReference.child(image.getStorageRef());
                 imgRef.getBytes(1024*1024)
                         .addOnSuccessListener(new OnSuccessListener<byte[]>() {
                             @Override
@@ -221,6 +290,36 @@ public class ProfileFragment extends Fragment {
                         });
                 Log.d(TAG, "setupProfile: " + imgRef.toString());
             }
+
+            private void deleteImage(Image image) {
+                //TODO Delete from Storage
+                StorageReference reference = storageReference.child(image.getStorageRef());
+                reference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "Image successfully deleted from storage");
+                    }
+                });
+                //TODO Delete from Firestore
+                db.collection("Image").document(image.getDocumentID()).delete()
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Log.d(TAG, "Image successfully deleted from firestore");
+                            }
+                        });
+            }
+        }
+        private void changeFirebaseData(Image image) {
+            HashMap<String, Object> likedByList = new HashMap<>();
+            likedByList.put("likedBy", image.getLikedBy());
+            db.collection("Image").document(image.getDocumentID())
+                    .update(likedByList).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    //Log.d(TAG, "LIKED BY SUCCESS");
+                }
+            });
         }
     }
 }

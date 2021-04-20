@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Inclass11</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="courses_textView">Courses</string>
+    <string name="course_Grade_aaa">Course Grade</string>
+    <string name="letter_A">A</string>
+    <string name="letter_B">B</string>
+    <string name="letter_C">C</string>
+    <string name="letter_D">D</string>
+    <string name="letter_F">F</string>
+    <string name="hint_CourseNumber">Course Number</string>
+    <string name="hint_CourseName">Course Name</string>
+    <string name="hint_CreditHours">Credit Hours</string>
+    <string name="view_addcourse">+</string>
+    <string name="view_Submit">Submit</string>
+    <string name="view_Cancel">Cancel</string>
+</resources>
