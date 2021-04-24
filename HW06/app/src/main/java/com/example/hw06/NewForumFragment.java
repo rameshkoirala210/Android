@@ -2,18 +2,15 @@ package com.example.hw06;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
@@ -37,12 +34,12 @@ public class NewForumFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("New Forum");
+        getActivity().setTitle("New Contact");
         mAuth = FirebaseAuth.getInstance();
 
         View view = inflater.inflate(R.layout.fragment_new_forum, container, false);
-        editForumTitle = view.findViewById(R.id.editForumTitle);
-        editForumDescription = view.findViewById(R.id.editForumDescription);
+        editForumTitle = view.findViewById(R.id.editForumnewEmail);
+        editForumDescription = view.findViewById(R.id.editForumnewPassword);
 
         //setData(title, description);
         view.findViewById(R.id.buttonSubmitForum).setOnClickListener(new View.OnClickListener() {

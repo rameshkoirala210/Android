@@ -33,10 +33,10 @@
         android:text="@string/button_Submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editForumDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/editForumnewPassword" />
 
     <EditText
-        android:id="@+id/editForumTitle"
+        android:id="@+id/editForumnewEmail"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
@@ -45,14 +45,14 @@
         android:layout_marginEnd="31dp"
         android:layout_marginRight="31dp"
         android:ems="10"
-        android:hint="@string/strForumTitle"
+        android:hint="Enter Email"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editForumDescription"
+        android:id="@+id/editForumnewPassword"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
@@ -61,10 +61,10 @@
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:ems="10"
-        android:hint="@string/strForumDescription"
+        android:hint="Enter Password"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editForumTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/editForumnewEmail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
