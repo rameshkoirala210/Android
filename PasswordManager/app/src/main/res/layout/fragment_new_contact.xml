@@ -8,7 +8,7 @@
     tools:context=".NewContactFragment">
 
     <Button
-        android:id="@+id/buttonCancleForum"
+        android:id="@+id/buttonCancleContact"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
@@ -19,10 +19,10 @@
         android:text="@string/button_Cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSubmitForum" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonSubmitContact" />
 
     <Button
-        android:id="@+id/buttonSubmitForum"
+        android:id="@+id/buttonSubmitContact"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
@@ -33,10 +33,10 @@
         android:text="@string/button_Submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editForumDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/edittextPassword" />
 
     <EditText
-        android:id="@+id/editForumTitle"
+        android:id="@+id/edittextNewEmail"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
@@ -46,13 +46,13 @@
         android:layout_marginRight="31dp"
         android:ems="10"
         android:hint="Enter Email"
-        android:inputType="textPersonName"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editForumDescription"
+        android:id="@+id/edittextPassword"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
@@ -65,6 +65,6 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editForumTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/edittextNewEmail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
